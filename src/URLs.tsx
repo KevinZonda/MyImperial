@@ -42,6 +42,6 @@ export const URLs = (shortCode: string, cid: string) => {
     m.set("Book Library Room", BOOK_LIBRARY_ROOM)
     return [
         { title: "DoC Links", urls: doc },
-        { title: "Imperial Useful Links", urls: m }
+        { title: "Useful Links", urls: m }
     ]
 }

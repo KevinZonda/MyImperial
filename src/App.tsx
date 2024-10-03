@@ -4,7 +4,7 @@ import Title from 'antd/es/typography/Title';
 import { UserStore } from './Store/UserStore';
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour';
 import { useState } from 'react';
-import { SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined, SettingOutlined, SyncOutlined, UserOutlined } from '@ant-design/icons';
 import { Refresh } from './helper/browser';
 
 const clickableGrid: React.CSSProperties = {
@@ -23,14 +23,14 @@ const unClickableGrid: React.CSSProperties = {
   textDecoration: 'line-through',
 };
 
-const Welcome = () => {
+const Welcome = ({ hide }: { hide: boolean }) => {
   const titleStyle: React.CSSProperties = {
     color: COLOUR_IMPERIAL_BLUE,
     marginTop: 0,
   }
-  if (UserStore.name) {
+  if (UserStore.name && !hide) {
     return <>
-      <Title style={{ ...titleStyle, marginBottom: 0}} level={1}>Hi, {UserStore.name} {UserStore.cid && `(CID: ${UserStore.cid})`}</Title>
+      <Title style={{ ...titleStyle, marginBottom: 0 }} level={1}>Hi, {UserStore.name} {UserStore.cid && `(CID: ${UserStore.cid})`}</Title>
       <p>Welcome to KevinZonda :: MyImperial</p>
     </>
   }
@@ -96,10 +96,16 @@ const Setting = () => {
 
 
 function App() {
+  const [hide, setHide] = useState(false)
+
   return (
     <>
-      <Welcome />
-      <Setting />
+      <Welcome hide={hide} />
+      <Space direction="horizontal">
+        <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
+        <Setting />
+        <Button type="primary" onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined /> } />
+      </Space>
       {
         URLs(UserStore.shortCode, UserStore.cid).map((prop) => {
 
