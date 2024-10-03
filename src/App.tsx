@@ -9,11 +9,12 @@ import { Refresh } from './helper/browser';
 import { WeatherBanner } from './Weather';
 import { CourseSection, CourseSettingBtn } from './Courses';
 import { SettingsBtn } from './Settings';
+import { Footer } from './Footer';
 
 const Welcome = ({ hide }: { hide: boolean }) => {
   const titleStyle: React.CSSProperties = {
     color: COLOUR_IMPERIAL_BLUE,
-    marginTop: 0,
+    margin: 0,
   }
   if (UserStore.name && !hide) {
     return <>
@@ -29,17 +30,20 @@ function App() {
 
   return (
     <>
-      <Welcome hide={hide} />
-      <WeatherBanner />
-      <Space direction="horizontal">
-        <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
-        <SettingsBtn />
-        <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined />} />
-        <CourseSettingBtn />
-      </Space>
-      <CourseSection />
-      <URLList />
+      <div style={{ margin: 32 }}>
+        <Welcome hide={hide} />
+        <WeatherBanner />
+        <Space direction="horizontal">
+          <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
+          <SettingsBtn />
+          <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined />} />
+          <CourseSettingBtn />
+        </Space>
+        <CourseSection />
+        <URLList />
+      </div>
 
+      <Footer />
     </>
   )
 }
