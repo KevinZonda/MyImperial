@@ -30,6 +30,15 @@ class _userStore {
         this._name = v
     }
 
+    private _courses: string = localStorage.getItem('courses') || ""
+    public get courses(): string {
+        return this._courses
+    }
+    public set courses(v: string) {
+        localStorage.setItem('courses', v)
+        this._courses = v
+    }
+
 }
 
 export const UserStore = new _userStore()

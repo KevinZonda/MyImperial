@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { EyeInvisibleOutlined, EyeOutlined, SettingOutlined, SyncOutlined, UserOutlined } from '@ant-design/icons';
 import { Refresh } from './helper/browser';
 import { WeatherBanner } from './Weather';
+import { CourseSection, CourseSettingBtn } from './Courses';
 
 const clickableGrid: React.CSSProperties = {
   width: '100%',
@@ -107,7 +108,9 @@ function App() {
         <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
         <Setting />
         <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined /> } />
+        <CourseSettingBtn />
       </Space>
+      <CourseSection />
       {
         URLs(UserStore.shortCode, UserStore.cid).map((prop) => {
 
