@@ -1,6 +1,5 @@
-import { Card, Col, Row, Space } from 'antd'
-import './App.css'
-import { CALENDAR, DOC_EXAM_URL, DOC_SCIENTIA_URL, IMPERIAL_MAIL, PERSONAL_PAGE, URLs } from './URLs'
+import { Card, Col, Row } from 'antd'
+import { URLs } from './URLs'
 import Title from 'antd/es/typography/Title';
 import { UserStore } from './Store/UserStore';
 
