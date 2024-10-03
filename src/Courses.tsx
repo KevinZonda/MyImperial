@@ -84,7 +84,7 @@ export const CourseSection = () => {
         </>
     }
 
-    const quote = (c : string) => {
+    const quote = (c: string) => {
         return wDim.width < 560 ? '' : c
     }
     return <>

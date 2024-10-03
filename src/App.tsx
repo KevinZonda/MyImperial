@@ -16,12 +16,10 @@ const Welcome = ({ hide }: { hide: boolean }) => {
     color: COLOUR_IMPERIAL_BLUE,
     margin: 0,
   }
-  if (UserStore.name && !hide) {
-    return <>
-      <Title style={titleStyle} level={1}>Hi, {UserStore.name} {UserStore.cid && `(CID: ${UserStore.cid})`}</Title>
-    </>
-  }
-  return <Title style={titleStyle} level={1}>KevinZonda :: My Imperial</Title>
+  const name = hide ? UserStore.pubName : UserStore.name
+  const showCid = !hide && UserStore.cid
+  if (!name) return <Title style={titleStyle} level={1}>KevinZonda :: My Imperial</Title>
+  return <Title style={titleStyle} level={1}>Hi, {name} {showCid && `(CID: ${UserStore.cid})`}</Title>
 }
 
 
@@ -38,7 +36,7 @@ function App() {
           <SettingsBtn />
           <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined />} />
           <CourseSettingBtn />
-          <Button type="primary" onClick={() => window.open("https://github.com/KevinZonda/MyImperial", "_blank")} icon={<GithubOutlined />}/>
+          <Button type="primary" onClick={() => window.open("https://github.com/KevinZonda/MyImperial", "_blank")} icon={<GithubOutlined />} />
         </Space>
         <CourseSection />
         <URLList />

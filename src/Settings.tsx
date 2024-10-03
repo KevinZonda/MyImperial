@@ -9,10 +9,12 @@ export const SettingsBtn = () => {
     const [shortCode, setShortCode] = useState(UserStore.shortCode)
     const [cid, setCid] = useState(UserStore.cid)
     const [name, setName] = useState(UserStore.name)
+    const [pubName, setPubName] = useState(UserStore.pubName)
     const onCancel = () => {
         setShortCode(UserStore.shortCode)
         setCid(UserStore.cid)
         setName(UserStore.name)
+        setPubName(UserStore.pubName)
         setIsModalOpen(false)
     }
 
@@ -20,6 +22,7 @@ export const SettingsBtn = () => {
         UserStore.shortCode = shortCode
         UserStore.cid = cid
         UserStore.name = name
+        UserStore.pubName = pubName
         setIsModalOpen(false)
         Refresh()
     }
@@ -39,6 +42,7 @@ export const SettingsBtn = () => {
                 UserStore.name = ""
                 UserStore.shortCode = ""
                 UserStore.cid = ""
+                UserStore.pubName = ""
                 Refresh()
             }}>
                 Clear
@@ -54,6 +58,7 @@ export const SettingsBtn = () => {
                 <Input size="large" placeholder="Name" prefix={<UserOutlined />} value={name} onChange={(e) => setName(e.target.value)} />
                 <Input size="large" placeholder="Short code" prefix={<UserOutlined />} value={shortCode} onChange={(e) => setShortCode(e.target.value)} />
                 <Input size="large" placeholder="College ID" prefix={<UserOutlined />} value={cid} onChange={(e) => setCid(e.target.value)} />
+                <Input size="large" placeholder="Public Name" prefix={<UserOutlined />} value={pubName} onChange={(e) => setPubName(e.target.value)} />
             </Space>
         </Modal>
 

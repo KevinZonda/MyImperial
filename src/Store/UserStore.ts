@@ -1,8 +1,4 @@
 class _userStore {
-    constructor() {
-        
-    }
-
     private _shortCode: string = localStorage.getItem('shortCode') || ""
     public get shortCode(): string {
         return this._shortCode
@@ -37,6 +33,16 @@ class _userStore {
     public set courses(v: string) {
         localStorage.setItem('courses', v)
         this._courses = v
+    }
+
+
+    private _pubName: string = localStorage.getItem('pubName') || ""
+    public get pubName(): string {
+        return this._pubName
+    }
+    public set pubName(v: string) {
+        localStorage.setItem('pubName', v)
+        this._pubName = v
     }
 
 }
