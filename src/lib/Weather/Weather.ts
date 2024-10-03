@@ -78,3 +78,26 @@ export async function getWeather() {
 
 
 }
+
+interface WillRainResponse {
+    WillRain: boolean;
+    H: number
+}
+
+export function willRain(weatherData: any) : WillRainResponse {
+    const currentHour = new Date().getHours();
+    const rain = new Array<number>();
+    for (let i = 0; i < weatherData.hourly.time.length; i++) {
+        if (weatherData.hourly.rain[i] > 0) {
+            rain.push(i);
+        }
+    }
+
+    const later = rain.filter((_, index) => index > currentHour);
+    const rainV = later.length > 0 ? rain.filter((v) => v > 0) : rain;
+    if (rainV.length === 0) {
+        return { WillRain: false, H: 0 };
+    }
+    const heaviestRain = Math.max(...rainV)
+    return { WillRain: true, H: heaviestRain };
+}
