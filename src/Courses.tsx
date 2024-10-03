@@ -5,6 +5,7 @@ import { FormOutlined } from "@ant-design/icons";
 import { Button, Input, List, Modal, notification, Space } from "antd";
 import { CourseToEd, CourseToIntro, CourseToScientia, ParseCourseErr } from "./lib/Parser/parser";
 import Link from "antd/es/typography/Link";
+import { getWindowDimensions } from "./helper/screen";
 
 const { TextArea } = Input;
 
@@ -57,6 +58,17 @@ export const CourseSection = () => {
     const { courses, ok } = ParseCourseErr(UserStore.courses)
     const [api, contextHolder] = notification.useNotification();
 
+    const [wDim, setWDim] = useState(getWindowDimensions());
+
+    useEffect(() => {
+        function handleResize() {
+            setWDim(getWindowDimensions());
+        }
+
+        window.addEventListener('resize', handleResize);
+    }, []);
+
+
     useEffect(() => {
         if (ok) {
             return
@@ -70,6 +82,10 @@ export const CourseSection = () => {
         return <>
             {contextHolder}
         </>
+    }
+
+    const quote = (c : string) => {
+        return wDim.width < 560 ? '' : c
     }
     return <>
         <h2>Modules</h2>
@@ -85,8 +101,8 @@ export const CourseSection = () => {
                             <List.Item
                                 actions={[
                                     <Link href={CourseToIntro(item)}>Info</Link>,
-                                    <Link href={CourseToScientia(item)}>Scientia ({item.scientia})</Link>,
-                                    <Link disabled={!item.ed} key={CourseToEd(item)}>Ed ({item.ed ? item.ed : 'N/A'})</Link>]}
+                                    <Link href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>,
+                                    <Link disabled={!item.ed} key={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>]}
                             >
 
                                 <List.Item.Meta
