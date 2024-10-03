@@ -11,6 +11,10 @@ export function CourseToScientia(c : ICourse) {
     return `https://scientia.doc.ic.ac.uk/${Year}/modules/${c.scientia}/materials`
 }
 
+export function CourseToIntro(c : ICourse) {
+    return `https://www.imperial.ac.uk/computing/current-students/courses/${c.scientia}/`
+}
+
 export function CourseToEd(c : ICourse) {
     return `https://edstem.org/us/courses/${c.ed}/discussion/`
 }
