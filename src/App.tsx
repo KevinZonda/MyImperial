@@ -4,7 +4,7 @@ import Title from 'antd/es/typography/Title';
 import { UserStore } from './Store/UserStore';
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour';
 import { useState } from 'react';
-import { EyeInvisibleOutlined, EyeOutlined, SyncOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined, GithubOutlined, SyncOutlined } from '@ant-design/icons';
 import { Refresh } from './helper/browser';
 import { WeatherBanner } from './Weather';
 import { CourseSection, CourseSettingBtn } from './Courses';
@@ -38,6 +38,7 @@ function App() {
           <SettingsBtn />
           <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined />} />
           <CourseSettingBtn />
+          <Button type="primary" onClick={() => window.open("https://github.com/KevinZonda/MyImperial", "_blank")} icon={<GithubOutlined />}/>
         </Space>
         <CourseSection />
         <URLList />
