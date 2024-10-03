@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { ConfigProvider } from 'antd'
+import { COLOUR_IMPERIAL_BLUE } from './const/Colour.ts'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')!).render(
           borderRadiusOuter: 3,
           borderRadiusSM: 3,
           borderRadiusXS: 3,
+          colorPrimary: COLOUR_IMPERIAL_BLUE,
         }
       }}
     >
