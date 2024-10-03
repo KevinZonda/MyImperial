@@ -4,9 +4,8 @@ import Title from 'antd/es/typography/Title';
 import { UserStore } from './Store/UserStore';
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour';
 import { useState } from 'react';
-import { CloudOutlined, EyeInvisibleOutlined, EyeOutlined, SettingOutlined, SyncOutlined, UserOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined, SettingOutlined, SyncOutlined, UserOutlined } from '@ant-design/icons';
 import { Refresh } from './helper/browser';
-import { getWeather } from './lib/Weather/Weather';
 import { WeatherBanner } from './Weather';
 
 const clickableGrid: React.CSSProperties = {
@@ -107,8 +106,7 @@ function App() {
       <Space direction="horizontal">
         <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
         <Setting />
-        <Button type="primary" onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined /> } />
-        <Button icon={<CloudOutlined />} onClick={() => getWeather()}/>
+        <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined /> } />
       </Space>
       {
         URLs(UserStore.shortCode, UserStore.cid).map((prop) => {
