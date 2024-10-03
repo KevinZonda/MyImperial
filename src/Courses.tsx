@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserStore } from "./Store/UserStore";
 import { Refresh } from "./helper/browser";
 import { FormOutlined } from "@ant-design/icons";
-import { Button, Input, List, Modal, Space } from "antd";
-import { CourseToEd, CourseToIntro, CourseToScientia, ParseCourse } from "./lib/Parser/parser";
+import { Button, Input, List, Modal, notification, Space } from "antd";
+import { CourseToEd, CourseToIntro, CourseToScientia, ParseCourseErr } from "./lib/Parser/parser";
 import Link from "antd/es/typography/Link";
 
 const { TextArea } = Input;
@@ -51,12 +51,29 @@ export const CourseSettingBtn = () => {
 
 export const CourseSection = () => {
     if (!UserStore.courses) return null
-    const courses = ParseCourse(UserStore.courses)
+
+    const { courses, ok } = ParseCourseErr(UserStore.courses)
+    const [api, contextHolder] = notification.useNotification();
+
+    useEffect(() => {
+        if (ok) {
+            return
+        }
+        api.error({
+            message: 'Error',
+            description: 'Invalid course format, please check and try again.',
+        });
+    }, [ok])
+    if (!ok) {
+        return <>
+            {contextHolder}
+        </>
+    }
     return <>
         <h2>Modules</h2>
 
         {
-            courses.map((group, i) => {
+            courses && courses.map((group, i) => {
                 return <div key={i}>
                     <h3>Group {i + 1}</h3>
                     <List

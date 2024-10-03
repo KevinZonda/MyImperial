@@ -57,22 +57,22 @@ export async function getWeather() {
     };
 
     // `weatherData` now contains a simple structure with arrays for datetime and weather data
-    for (let i = 0; i < weatherData.hourly.time.length; i++) {
-        console.log(
-            weatherData.hourly.time[i].toISOString(),
-            weatherData.hourly.temperature2m[i],
-            weatherData.hourly.rain[i],
-            weatherData.hourly.weatherCode[i]
-        );
-    }
-    for (let i = 0; i < weatherData.daily.time.length; i++) {
-        console.log(
-            weatherData.daily.time[i].toISOString(),
-            weatherData.daily.weatherCode[i],
-            weatherData.daily.temperature2mMax[i],
-            weatherData.daily.temperature2mMin[i]
-        );
-    }
+    // for (let i = 0; i < weatherData.hourly.time.length; i++) {
+    //     console.log(
+    //         weatherData.hourly.time[i].toISOString(),
+    //         weatherData.hourly.temperature2m[i],
+    //         weatherData.hourly.rain[i],
+    //         weatherData.hourly.weatherCode[i]
+    //     );
+    // }
+    // for (let i = 0; i < weatherData.daily.time.length; i++) {
+    //     console.log(
+    //         weatherData.daily.time[i].toISOString(),
+    //         weatherData.daily.weatherCode[i],
+    //         weatherData.daily.temperature2mMax[i],
+    //         weatherData.daily.temperature2mMin[i]
+    //     );
+    // }
 
     return weatherData;
 
