@@ -17,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
           borderRadiusSM: 3,
           borderRadiusXS: 3,
           colorPrimary: COLOUR_IMPERIAL_BLUE,
+          colorLink: COLOUR_IMPERIAL_BLUE,
         }
       }}
     >
