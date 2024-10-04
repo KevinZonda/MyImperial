@@ -19,7 +19,7 @@ export const ED = "https://edstem.org/"
 export const DOC_LAB = 'https://www.imperial.ac.uk/computing/people/csg/facilities/lab/workstations/'
 export const DOC_BOOK_LAB_ROOM = 'https://mrbs.doc.ic.ac.uk/lab/index.php'
 export const BOOK_LIBRARY_ROOM = 'https://connect2.lib.ic.ac.uk/Connect2/'
-
+export const GOV_UK_EVISA = 'https://www.gov.uk/view-prove-immigration-status'
 export interface Section {
     title: string
     urls: Map<string, string>
@@ -33,7 +33,7 @@ export const URLs = (shortCode: string, cid: string) => {
     doc.set("GitLab", GITLAB)
     doc.set("Ed", ED)
     doc.set("Exam", DOC_EXAM_URL)
-    doc.set("SysInfo", DOC_INFO_REGI)
+    doc.set("SysInfo/Registration", DOC_INFO_REGI)
     doc.set("Personal Page", PERSONAL_PAGE(shortCode))
     doc.set("Lab", DOC_LAB)
     doc.set("Book Lab Room", DOC_BOOK_LAB_ROOM)
@@ -45,6 +45,7 @@ export const URLs = (shortCode: string, cid: string) => {
     m.set("Blackboard", BB)
     m.set("Calendar", CALENDAR(cid))
     m.set("Book Library Room", BOOK_LIBRARY_ROOM)
+    m.set("eVisa", GOV_UK_EVISA)
     return [
         { title: "DoC Links", urls: doc },
         { title: "Useful Links", urls: m }

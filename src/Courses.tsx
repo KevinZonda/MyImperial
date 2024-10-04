@@ -100,9 +100,9 @@ export const CourseSection = () => {
                         renderItem={(item) => (
                             <List.Item
                                 actions={[
-                                    <Link href={CourseToIntro(item)}>Info</Link>,
-                                    <Link href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>,
-                                    <Link disabled={!item.ed} key={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>]}
+                                    <Link target="_blank" href={CourseToIntro(item)}>Info</Link>,
+                                    <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>,
+                                    <Link disabled={!item.ed} target="_blank" href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>]}
                             >
 
                                 <List.Item.Meta
