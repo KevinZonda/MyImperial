@@ -1,4 +1,24 @@
 class _userStore {
+    public export() {
+        return JSON.stringify({
+            shortCode: this.shortCode,
+            cid: this.cid,
+            name: this.name,
+            courses: this.courses,
+            pubName: this.pubName
+        })
+    }
+
+    public import(s: string) {
+        const obj = JSON.parse(s)
+        this.shortCode = obj.shortCode
+        this.cid = obj.cid
+        this.name = obj.name
+        this.courses = obj.courses
+        this.pubName = obj.pubName
+    }
+
+
     private _shortCode: string = localStorage.getItem('shortCode') || ""
     public get shortCode(): string {
         return this._shortCode
