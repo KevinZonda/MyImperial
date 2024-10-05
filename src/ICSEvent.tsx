@@ -40,7 +40,7 @@ function iCSDateToString(x: string | ComplexDate | undefined): string {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-export const ICSEvents = ({ maxEvents = 5 }: { maxEvents: number }) => {
+export const ICSEvents = () => {
     if (!UserStore.ical) return null
     const { data, error, isLoading } = useSWR('/ics', async () => {
         const response = await fetch(UserStore.ical);
@@ -61,7 +61,7 @@ export const ICSEvents = ({ maxEvents = 5 }: { maxEvents: number }) => {
         const dt = parseICSDate(event.start)
         if (!dt) return false
         return dt.getTime() > Date.now()
-    }).slice(0, maxEvents);
+    }).slice(0, UserStore.icalCount);
     if (!events || events.length === 0) return <div>No upcoming events</div>
 
     return (

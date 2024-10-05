@@ -41,7 +41,7 @@ function App() {
           <Button type="primary" onClick={() => window.open("https://github.com/KevinZonda/MyImperial", "_blank")} icon={<GithubOutlined />} />
           <ShareBtn />
         </Space>
-        <ICSEvents maxEvents={5}/>
+        <ICSEvents />
         <CourseSection />
         <URLList />
       </div>

@@ -6,7 +6,8 @@ class _userStore {
             name: this.name,
             courses: this.courses,
             pubName: this.pubName,
-            ical: this.ical
+            ical: this.ical,
+            icalCount: this.icalCount
         })
     }
 
@@ -18,6 +19,22 @@ class _userStore {
         this.courses = obj.courses
         this.pubName = obj.pubName
         this.ical = obj.ical
+        this.icalCount = obj.icalCount
+    }
+
+    public constructor() {
+        const icalCount = localStorage.getItem('icalCount') || '5'
+        this._icalCount = isNaN(+icalCount) ? 5 : +icalCount
+        this._icalCount = this._icalCount < 1 ? 1 : this._icalCount
+    }
+
+    private _icalCount: number
+    public get icalCount(): number {
+        return this._icalCount
+    }
+    public set icalCount(v: number) {
+        localStorage.setItem('icalCount', v.toString())
+        this._icalCount = v
     }
 
     private _ical = localStorage.getItem('ical') || ""
