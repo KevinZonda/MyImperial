@@ -69,17 +69,15 @@ export const URLList = () => {
         <>
             {
                 URLs(UserStore.shortCode, UserStore.cid).map((prop) => {
-
-
                     return (
-                        <>
+                        <div key={prop.title}>
                             <h2>{prop.title}</h2>
                             <Row gutter={[16, 16]}>
                                 {
 
                                     Array.from(prop.urls).map(([title, url]) => (
-                                        <Col xs={24} sm={12} md={8} lg={6} xl={4}>
-                                            <Card style={url ? clickableGrid : unClickableGrid} hoverable={url ? true : false} onClick={() => {
+                                        <Col key={title} xs={24} sm={12} md={8} lg={6} xl={4}>
+                                            <Card style={url ? clickableGrid : unClickableGrid} hoverable={!!url} onClick={() => {
                                                 url && window.open(url, "_blank")
                                             }}>
                                                 {title}
@@ -88,7 +86,7 @@ export const URLList = () => {
                                     ))
                                 }
                             </Row>
-                        </>
+                        </div>
                     )
                 })
             }
