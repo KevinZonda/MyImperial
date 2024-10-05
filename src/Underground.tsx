@@ -8,7 +8,7 @@ export const Underground = () => {
     const after1900 = hours > 19 || (hours === 19 && minutes > 0);
     const isOffPeak = isWeekend || (after930 && before1600) || after1900;
 
-    return <p style={{ marginTop: 0 }}>
+    return <p style={{ margin: 0 }}>
         <span style={{ fontWeight: 'bold' }}>London Ubderground: </span>
         {after930 ? 'Off-peak' : 'Peak'} (Zone 1);&nbsp;
         {isOffPeak ? 'Off-peak' : 'Peak'} (Others)

@@ -8,7 +8,7 @@ export const WeatherBanner = () => {
     if (error) return <div>Error loading weather data</div>
     if (!data) return <div>No weather data</div>
     const rain = willRain(data)
-    return <p style={{ marginBottom: 0 }}>
+    return <p style={{ margin: 0 }}>
         <span style={{ fontWeight: 'bold' }}>Weather @ Imperial College: </span>
         W: {getWeatherCode(data.current.weatherCode)}
         {rain.WillRain ? `🌧️ will rain max ${rain.H} mm/h; ` : '; '}

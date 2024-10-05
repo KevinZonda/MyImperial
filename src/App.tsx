@@ -13,6 +13,7 @@ import { Footer } from './Footer';
 import { ShareBtn } from './import';
 import { ICSEvents } from './ICSEvent';
 import { Underground } from './Underground';
+import { CID } from './CID';
 
 const Welcome = ({ hide }: { hide: boolean }) => {
   const titleStyle: React.CSSProperties = {
@@ -20,9 +21,8 @@ const Welcome = ({ hide }: { hide: boolean }) => {
     margin: 0,
   }
   const name = hide ? UserStore.pubName : UserStore.name
-  const showCid = !hide && UserStore.cid
   if (!name) return <Title style={titleStyle} level={1}>KevinZonda :: My Imperial</Title>
-  return <Title style={titleStyle} level={1}>Hi, {name} {showCid && `(CID: ${UserStore.cid})`}</Title>
+  return <Title style={titleStyle} level={1}>Hi, {name}</Title>
 }
 
 
@@ -33,8 +33,12 @@ function App() {
     <>
       <div style={{ margin: 32 }}>
         <Welcome hide={hide} />
-        <WeatherBanner />
-        <Underground />
+        <div style={{ marginTop: 16, marginBottom: 16 }}>
+          {!hide && <CID />}
+          <WeatherBanner />
+          <Underground />
+        </div>
+
         <Space direction="horizontal">
           <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
           <SettingsBtn />
