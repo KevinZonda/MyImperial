@@ -58,7 +58,7 @@ func proxyGen(ics string) func(c *gin.Context) {
 		id := c.Param("id")
 		token := c.Param("token")
 		calendar := c.Param("calendar")
-		outlookUrl := URL(id, token, calendar, "reachcalendar.ics")
+		outlookUrl := URL(id, token, calendar, ics)
 		fmt.Println(outlookUrl)
 		remote, err := url.Parse(outlookUrl)
 		if err != nil {
