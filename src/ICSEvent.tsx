@@ -89,6 +89,7 @@ export const ICSEvents = () => {
                     <List.Item>
                         <List.Item.Meta
                             title={event.summary}
+                            style={{minWidth: '200px'}}
                         />
                         <p style={{ margin: 0 }}>
                             {event.location ? event.location + ` · ` : "N/A"}
