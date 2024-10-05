@@ -76,8 +76,8 @@ export const ShareBtn = () => {
             </Button>
         ]}>
             <Space direction="horizontal" style={{ width: '100%' }}>
-                <ImportBtn />
                 <ExportBtn />
+                <ImportBtn />
             </Space>
         </Modal>
 
