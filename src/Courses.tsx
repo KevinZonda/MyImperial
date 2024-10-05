@@ -102,7 +102,8 @@ export const CourseSection = () => {
                                 actions={[
                                     <Link target="_blank" href={CourseToIntro(item)}>Info</Link>,
                                     <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>,
-                                    <Link disabled={!item.ed} target="_blank" href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>]}
+                                    <Link disabled={!item.ed} target="_blank" href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>
+                                ]}
                             >
 
                                 <List.Item.Meta

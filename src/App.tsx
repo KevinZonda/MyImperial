@@ -4,13 +4,14 @@ import Title from 'antd/es/typography/Title';
 import { UserStore } from './Store/UserStore';
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour';
 import { useState } from 'react';
-import { CloudSyncOutlined, EyeInvisibleOutlined, EyeOutlined, GithubOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined, GithubOutlined, SyncOutlined } from '@ant-design/icons';
 import { Refresh } from './helper/browser';
 import { WeatherBanner } from './Weather';
 import { CourseSection, CourseSettingBtn } from './Courses';
 import { SettingsBtn } from './Settings';
 import { Footer } from './Footer';
 import { ShareBtn } from './import';
+import { ICSEvents } from './ICSEvent';
 
 const Welcome = ({ hide }: { hide: boolean }) => {
   const titleStyle: React.CSSProperties = {
@@ -33,13 +34,14 @@ function App() {
         <Welcome hide={hide} />
         <WeatherBanner />
         <Space direction="horizontal">
-          <Button type="primary" onClick={Refresh} icon={<CloudSyncOutlined />} />
+          <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
           <SettingsBtn />
           <Button type={!hide ? 'primary' : undefined} onClick={() => setHide(!hide)} icon={hide ? <EyeInvisibleOutlined /> : <EyeOutlined />} />
           <CourseSettingBtn />
           <Button type="primary" onClick={() => window.open("https://github.com/KevinZonda/MyImperial", "_blank")} icon={<GithubOutlined />} />
           <ShareBtn />
         </Space>
+        <ICSEvents maxEvents={5}/>
         <CourseSection />
         <URLList />
       </div>

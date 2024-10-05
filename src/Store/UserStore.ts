@@ -5,7 +5,8 @@ class _userStore {
             cid: this.cid,
             name: this.name,
             courses: this.courses,
-            pubName: this.pubName
+            pubName: this.pubName,
+            ical: this.ical
         })
     }
 
@@ -16,8 +17,17 @@ class _userStore {
         this.name = obj.name
         this.courses = obj.courses
         this.pubName = obj.pubName
+        this.ical = obj.ical
     }
 
+    private _ical = localStorage.getItem('ical') || ""
+    public get ical(): string {
+        return this._ical
+    }
+    public set ical(v: string) {
+        localStorage.setItem('ical', v)
+        this._ical = v
+    }
 
     private _shortCode: string = localStorage.getItem('shortCode') || ""
     public get shortCode(): string {

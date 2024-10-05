@@ -13,7 +13,10 @@ importers:
         version: 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd:
         specifier: ^5.21.2
-        version: 5.21.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 5.21.2(date-fns@4.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      ikalendar:
+        specifier: ^1.5.0
+        version: 1.5.0
       openmeteo:
         specifier: ^1.1.4
         version: 1.1.4
@@ -551,6 +554,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@touch4it/ical-timezones@1.9.0':
+    resolution: {integrity: sha512-UAiZMrFlgMdOIaJDPsKu5S7OecyMLr3GGALJTYkRgHmsHAA/8Ixm1qD09ELP2X7U1lqgrctEgvKj9GzMbczC+g==}
+    engines: {node: '>= 14.0.0'}
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -746,6 +753,9 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
+
   dayjs@1.11.13:
     resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
@@ -915,6 +925,9 @@ packages:
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
+
+  ikalendar@1.5.0:
+    resolution: {integrity: sha512-lLZGVy6eOERUgwUYWNcXMp+jvOQPuHydzo76Ll6wNUE/TjpU8mxzMjLx88JNXV+wydWd42sjjCgTXmeguPmggw==}
 
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -1335,6 +1348,9 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
+  rrule@2.8.1:
+    resolution: {integrity: sha512-hM3dHSBMeaJ0Ktp7W38BJZ7O1zOgaFEsn41PDk+yHoEtfLV+PoJt9E9xAlZiWgf/iqEqionN0ebHFZIDAp+iGw==}
+
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
@@ -1415,6 +1431,9 @@ packages:
     engines: {node: '>=16'}
     peerDependencies:
       typescript: '>=4.2.0'
+
+  tslib@2.7.0:
+    resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -1947,6 +1966,8 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.0':
     optional: true
 
+  '@touch4it/ical-timezones@1.9.0': {}
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.25.7
@@ -2098,7 +2119,7 @@ snapshots:
     dependencies:
       color-convert: 2.0.1
 
-  antd@5.21.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  antd@5.21.2(date-fns@4.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@ant-design/colors': 7.1.0
       '@ant-design/cssinjs': 1.21.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2130,7 +2151,7 @@ snapshots:
       rc-motion: 2.9.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-notification: 5.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-pagination: 4.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rc-picker: 4.6.15(dayjs@1.11.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-picker: 4.6.15(date-fns@4.1.0)(dayjs@1.11.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-progress: 4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-rate: 2.13.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-resize-observer: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2230,6 +2251,9 @@ snapshots:
       which: 2.0.2
 
   csstype@3.1.3: {}
+
+  date-fns@4.1.0:
+    optional: true
 
   dayjs@1.11.13: {}
 
@@ -2416,6 +2440,11 @@ snapshots:
   has-flag@4.0.0: {}
 
   ignore@5.3.2: {}
+
+  ikalendar@1.5.0:
+    dependencies:
+      '@touch4it/ical-timezones': 1.9.0
+      rrule: 2.8.1
 
   import-fresh@3.3.0:
     dependencies:
@@ -2699,7 +2728,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  rc-picker@4.6.15(dayjs@1.11.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rc-picker@4.6.15(date-fns@4.1.0)(dayjs@1.11.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.25.7
       '@rc-component/trigger': 2.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2710,6 +2739,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     optionalDependencies:
+      date-fns: 4.1.0
       dayjs: 1.11.13
 
   rc-progress@4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -2911,6 +2941,10 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.24.0
       fsevents: 2.3.3
 
+  rrule@2.8.1:
+    dependencies:
+      tslib: 2.7.0
+
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
@@ -2974,6 +3008,8 @@ snapshots:
   ts-api-utils@1.3.0(typescript@5.6.2):
     dependencies:
       typescript: 5.6.2
+
+  tslib@2.7.0: {}
 
   type-check@0.4.0:
     dependencies:
