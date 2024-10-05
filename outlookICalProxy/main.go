@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -58,7 +59,7 @@ func proxyGen(ics string) func(c *gin.Context) {
 		token := c.Param("token")
 		calendar := c.Param("calendar")
 		outlookUrl := URL(id, token, calendar, "reachcalendar.ics")
-
+		fmt.Println(outlookUrl)
 		remote, err := url.Parse(outlookUrl)
 		if err != nil {
 			c.String(500, "Failed to parse url")
