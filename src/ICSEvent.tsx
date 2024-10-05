@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { ComplexDate, Parser } from "ikalendar";
 import { List } from "antd";
 import { UserStore } from "./Store/UserStore";
+import { Cache } from "./Store/Cache";
 
 function iCalDate(x: string): Date | undefined {
     try {
@@ -40,19 +41,33 @@ function iCSDateToString(x: string | ComplexDate | undefined): string {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
+export async function FetchICS() {
+    const response = await fetch(UserStore.ical);
+    const icsData = await response.text();
+
+    Cache.set('ics', icsData, 1000 * 60 * 60 * 24) // Cache for 24 hours
+    return icsData
+}
+
+function parse(x : string) {
+    const parser = new Parser()
+    return parser.parse(x)
+}
+
 export const ICSEvents = () => {
     if (!UserStore.ical) return null
     const { data, error, isLoading } = useSWR('/ics', async () => {
-        const response = await fetch(UserStore.ical);
-        const icsData = await response.text();
-        const parser = new Parser()
-
-        return parser.parse(icsData)
+        const cached = Cache.get('ics')
+        if (cached) {
+            return parse(cached)
+        }
+        const icsData = await FetchICS()
+        return parse(icsData)
     })
 
-    if (isLoading) return <div>Events Loading...</div>
-    if (error) return <div>Error loading events</div>
-    if (!data) return <div>No events data</div>
+    if (isLoading) return <div style={{marginTop: 16}}>Events Loading...</div>
+    if (error) return <div style={{marginTop: 16}}>Error loading events</div>
+    if (!data) return <div style={{marginTop: 16}}>No events data</div>
 
     const dt = data
     if (!dt) return <div>Error parsing events</div>
@@ -66,7 +81,7 @@ export const ICSEvents = () => {
 
     return (
         <div className="ics-events">
-            <h2 className="text-xl font-bold mb-4">Upcoming Events</h2>
+            <h2>Upcoming Events</h2>
             <List
                 itemLayout="horizontal"
                 dataSource={events}

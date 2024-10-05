@@ -2,7 +2,36 @@ import { useState } from "react";
 import { UserStore } from "./Store/UserStore";
 import { CalendarOutlined, IdcardOutlined, MailOutlined, SettingOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Refresh } from "./helper/browser";
-import { Button, Input, InputNumber, Modal, Space } from "antd";
+import { Button, Input, InputNumber, Modal, notification, Space } from "antd";
+import { FetchICS } from "./ICSEvent";
+
+export const SyncCalendarBtn = () => {
+    const [api, contextHolder] = notification.useNotification();
+
+    const onSync = async () => {
+        try {
+            await FetchICS()
+            api.success({
+                message: 'Sync Success',
+                description: 'Your calendar has been synced'
+            })
+        } catch (e) {
+            api.error({
+                message: 'Sync Failed',
+                description: String(e)
+            })
+            return
+        }
+    }
+
+    return <>
+        {contextHolder}
+        <Button onClick={onSync} icon={<CalendarOutlined />}>
+            Sync Calendar
+        </Button>
+    </>
+}
+    
 
 export const SettingsBtn = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,6 +98,7 @@ export const SettingsBtn = () => {
                 <Input size="large" placeholder="Public Name" prefix={<TeamOutlined />} value={pubName} onChange={(e) => setPubName(e.target.value)} />
                 <Input size="large" placeholder="iCal (.ics) URL" prefix={<CalendarOutlined />} value={iCal} onChange={(e) => setICal(e.target.value)} />
                 <InputNumber size="large" prefix={<><CalendarOutlined /> &nbsp; Event Count</>} style={{width: '100%'}} value={iCalCount} onChange={(e) => e && setICalCount(e)} />
+                <SyncCalendarBtn />
             </Space>
         </Modal>
 

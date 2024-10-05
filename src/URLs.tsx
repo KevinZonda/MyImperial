@@ -1,5 +1,3 @@
-import Title from 'antd/es/typography/Title';
-
 import { UserStore } from "./Store/UserStore"
 import { Card, Col, Row } from "antd"
 
@@ -75,7 +73,7 @@ export const URLList = () => {
 
                     return (
                         <>
-                            <Title level={2}>{prop.title}</Title>
+                            <h2>{prop.title}</h2>
                             <Row gutter={[16, 16]}>
                                 {
 
