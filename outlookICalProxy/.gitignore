@@ -1,0 +1,9 @@
+config.json
+out/
+.exe
+.exe~
+.so
+.dll
+.so~
+.vscode
+.dylib
