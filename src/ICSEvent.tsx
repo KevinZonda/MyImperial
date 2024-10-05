@@ -22,26 +22,47 @@ function iCalDate(x: string): Date | undefined {
     }
 }
 
-function parseICSDate(x: string | ComplexDate): Date | undefined {
+function parseICSDate(x: string | ComplexDate | undefined): Date | undefined {
+    if (!x) return undefined
     if (typeof x === 'string') {
         return iCalDate(x)
     }
     return iCalDate(x.value)
 }
 
-function iCSDateToString(x: string | ComplexDate | undefined): string {
-    if (!x) return "N/A"
-    const date = parseICSDate(x)
-    if (!date) return "N/A"
-    const pad = (num: number) => num.toString().padStart(2, '0');
+const pad = (num: number) => num.toString().padStart(2, '0');
 
+function dateToTime(date: Date) {
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    return `${hours}:${minutes}`
+}
+
+function dateToDate(date: Date) {
     const day = pad(date.getDate());
     const month = pad(date.getMonth() + 1); // getMonth() returns 0-11
     const year = date.getFullYear();
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
+    return `${day}/${month}/${year}`
+}
 
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+function dateToFullDate(date: Date | undefined) {
+    if (!date) return 'N/A'
+    return `${dateToDate(date)} ${dateToTime(date)}`
+}
+
+function iCSTDateRangeToString(start: string | ComplexDate | undefined, end: string | ComplexDate | undefined): string {
+    const left = parseICSDate(start)
+    const right = parseICSDate(end)
+    if (left && right) {
+        const leftDate = dateToDate(left)
+        const leftTime = dateToTime(left)
+        const rightDate = dateToDate(right)
+        const rightTime = dateToTime(right)
+        return leftDate === rightDate
+            ? `${leftDate} ${leftTime} - ${rightTime}`
+            : `${leftDate} ${leftTime} - ${rightDate} ${rightTime}`
+    }
+    return `${dateToFullDate(left)} - ${dateToFullDate(right)}`
 }
 
 function filterEventWithCourse(events: Event[] | undefined, courses: ICourse[] | null): Event[] | undefined {
@@ -99,11 +120,9 @@ export const ICSEvents = () => {
 
 const CurrentEvents = ({ eventsRaw, flatCourse }: { eventsRaw: Event[], flatCourse: ICourse[] | null }) => {
     const events = eventsRaw.filter((event) => {
-        if (!event.start || !event.end) return false
         const left = parseICSDate(event.start)
-        if (!left) return false
         const right = parseICSDate(event.end)
-        if (!right) return false
+        if (!left || !right) return false
         return left.getTime() <= Date.now() && right.getTime() >= Date.now()
     });
     if (!events || events.length === 0) return null
@@ -118,7 +137,6 @@ const CurrentEvents = ({ eventsRaw, flatCourse }: { eventsRaw: Event[], flatCour
 
 const UpcomingEvents = ({ eventsRaw, flatCourse }: { eventsRaw: Event[], flatCourse: ICourse[] | null }) => {
     const events = eventsRaw.filter((event) => {
-        if (!event.start) return true
         const dt = parseICSDate(event.start)
         if (!dt) return true
         return dt.getTime() > Date.now()
@@ -164,7 +182,7 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                     <p style={{ margin: 0 }}>
                         {actions}
                         {event.location ? event.location + ` · ` : "N/A"}
-                        {iCSDateToString(event.start)} - {iCSDateToString(event.end)}
+                        {iCSTDateRangeToString(event.start, event.end)}
                     </p>
                 </List.Item>
             }} />
