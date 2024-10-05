@@ -11,9 +11,9 @@ export const WeatherBanner = () => {
     return <div>
         <p>
             <span style={{ fontWeight: 'bold' }}>Weather @ Imperial College: </span>
-            W: {getWeatherCode(data.current.weatherCode)};
-            {rain.WillRain && `🌧️ will rain max ${rain.H} mm/h;`}
-            T: {data.current.temperature2m.toFixed(1)}°C (H: {data.daily.temperature2mMax[0].toFixed(1)}°C, L: {data.daily.temperature2mMin[0].toFixed(1)}°C);
+            W: {getWeatherCode(data.current.weatherCode)}
+            {rain.WillRain ? `🌧️ will rain max ${rain.H} mm/h; ` : '; '}
+            T: {data.current.temperature2m.toFixed(1)}°C (L: {data.daily.temperature2mMin[0].toFixed(1)}°C, H: {data.daily.temperature2mMax[0].toFixed(1)}°C);
             R: {data.current.rain.toFixed(0)} mm/h
         </p>
     </div>
