@@ -17,6 +17,7 @@ export class _cache {
 
     public remove(key: string) {
         localStorage.removeItem(CACHE + key)
+        this.removeExpire(key)
     }
 
     public setExpire(key: string, expireTime: number) {
