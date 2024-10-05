@@ -31,6 +31,14 @@ func main() {
 		AllowAllOrigins: true,
 	}))
 
+	engine.GET("/", func(c *gin.Context) {
+		c.String(200, "KevinZonda Outlook iCalendar Proxy Service (OCPxS)")
+	})
+
+	engine.GET("/ping", func(c *gin.Context) {
+		c.String(200, "pong")
+	})
+
 	engine.GET("/calendar/:id/:token/:calendar/reachcalendar.ics", proxy)
 	engine.GET("/calendar/:id/:token/:calendar", proxy)
 	engine.GET("/owa/calendar/:id/:token/:calendar/reachcalendar.ics", proxy)
