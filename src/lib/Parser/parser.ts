@@ -8,7 +8,11 @@ export interface ICourse {
 const Year = '2425'
 
 export function CourseToScientia(c: ICourse) {
-    return `https://scientia.doc.ic.ac.uk/${Year}/modules/${c.scientia}/materials`
+    return IdToScientia(c.scientia)
+}
+
+export function IdToScientia(id: string) {
+    return `https://scientia.doc.ic.ac.uk/${Year}/modules/${id}/materials`
 }
 
 export function CourseToIntro(c: ICourse) {
