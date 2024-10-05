@@ -7,7 +7,8 @@ class _userStore {
             courses: this.courses,
             pubName: this.pubName,
             ical: this.ical,
-            icalCount: this.icalCount
+            icalCount: this.icalCount,
+            icalOnlyShowRelatedCourse: this.icalOnlyShowRelatedCourse
         })
     }
 
@@ -20,12 +21,22 @@ class _userStore {
         this.pubName = obj.pubName
         this.ical = obj.ical
         this.icalCount = obj.icalCount
+        this.icalOnlyShowRelatedCourse = obj.icalOnlyShowRelatedCourse
     }
 
     public constructor() {
         const icalCount = localStorage.getItem('icalCount') || '5'
         this._icalCount = isNaN(+icalCount) ? 5 : +icalCount
         this._icalCount = this._icalCount < 1 ? 1 : this._icalCount
+    }
+
+    private _icalOnlyShowRelatedCourse = localStorage.getItem('icalOnlyShowRelatedCourse') === 'true'
+    public get icalOnlyShowRelatedCourse(): boolean {
+        return this._icalOnlyShowRelatedCourse
+    }
+    public set icalOnlyShowRelatedCourse(v: boolean) {
+        localStorage.setItem('icalOnlyShowRelatedCourse', v ? 'true' : 'false')
+        this._icalOnlyShowRelatedCourse = v
     }
 
     private _icalCount: number

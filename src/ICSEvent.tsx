@@ -3,6 +3,8 @@ import { ComplexDate, Parser } from "ikalendar";
 import { List } from "antd";
 import { UserStore } from "./Store/UserStore";
 import { Cache } from "./Store/Cache";
+import { Event } from "ikalendar";
+import { ParseCourseErr } from "./lib/Parser/parser";
 
 function iCalDate(x: string): Date | undefined {
     try {
@@ -41,6 +43,20 @@ function iCSDateToString(x: string | ComplexDate | undefined): string {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
+function filterEventWithCourse(events: Event[] | undefined) : Event[] | undefined {
+    if (!UserStore.icalOnlyShowRelatedCourse) return events
+    if (!events) return undefined
+    const { courses, ok } = ParseCourseErr(UserStore.courses)
+    if (!ok) return events
+    if (!courses || courses.length === 0) return events
+    const courseCodes = courses.flat().map((course) => 'COMP' + course.scientia + ' - ' + course.name)
+    return events.filter((event) => {
+        if (!event.summary) return true
+        if (!event.summary.startsWith('COMP')) return true
+        return courseCodes.includes(event.summary)
+    })
+}
+
 export async function FetchICS() {
     const response = await fetch(UserStore.ical);
     const icsData = await response.text();
@@ -53,6 +69,7 @@ function parse(x : string) {
     const parser = new Parser()
     return parser.parse(x)
 }
+
 
 export const ICSEvents = () => {
     if (!UserStore.ical) return null
@@ -68,13 +85,40 @@ export const ICSEvents = () => {
     if (isLoading) return <div style={{marginTop: 16}}>Events Loading...</div>
     if (error) return <div style={{marginTop: 16}}>Error loading events</div>
     if (!data) return <div style={{marginTop: 16}}>No events data</div>
+    const eventsRaw = filterEventWithCourse(data.events)
 
-    const dt = data
-    if (!dt) return <div>Error parsing events</div>
-    const events = dt.events!.filter((event) => {
-        if (!event.start) return false
+    if (!eventsRaw || eventsRaw.length === 0) return <div style={{marginTop: 16}}>No events</div>
+
+    return <>
+        <CurrentEvents eventsRaw={eventsRaw} />
+        <UpcomingEvents eventsRaw={eventsRaw} />
+    </>
+}
+
+const CurrentEvents = ({eventsRaw} : {eventsRaw : Event[]}) => {
+    const events = eventsRaw.filter((event) => {
+        if (!event.start || !event.end) return false
+        const left = parseICSDate(event.start)
+        if (!left) return false
+        const right = parseICSDate(event.end)
+        if (!right) return false
+        return left.getTime() <= Date.now() && right.getTime() >= Date.now()
+    });
+    if (!events || events.length === 0) return null
+    return (
+        <div className="ics-events">
+            <h2>Current Events</h2>
+            <Events events={events} />
+        </div>
+    )
+
+}
+
+const UpcomingEvents = ({eventsRaw} : {eventsRaw : Event[]}) => {
+    const events = eventsRaw.filter((event) => {
+        if (!event.start) return true
         const dt = parseICSDate(event.start)
-        if (!dt) return false
+        if (!dt) return true
         return dt.getTime() > Date.now()
     }).slice(0, UserStore.icalCount);
     if (!events || events.length === 0) return <div>No upcoming events</div>
@@ -82,7 +126,14 @@ export const ICSEvents = () => {
     return (
         <div className="ics-events">
             <h2>Upcoming Events</h2>
-            <List
+            <Events events={events} />
+        </div>
+    );
+};
+
+const Events = ({events} : {events : Event[]}) => {
+    return (
+        <List
                 itemLayout="horizontal"
                 dataSource={events}
                 renderItem={(event) => (
@@ -97,7 +148,5 @@ export const ICSEvents = () => {
                         </p>
                     </List.Item>
                 )} />
-
-        </div>
-    );
-};
+    )
+}

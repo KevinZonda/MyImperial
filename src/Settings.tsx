@@ -43,6 +43,7 @@ export const SettingsBtn = () => {
     const [iCal, setICal] = useState(UserStore.ical)
     const [iCalCount, setICalCount] = useState(UserStore.icalCount)
     const [iCalProxy, setICalProxy] = useState(false)
+    const [iCalOnlyRelated, setICalOnlyRelated] = useState(UserStore.icalOnlyShowRelatedCourse)
     const onCancel = () => {
         setShortCode(UserStore.shortCode)
         setCid(UserStore.cid)
@@ -50,6 +51,8 @@ export const SettingsBtn = () => {
         setPubName(UserStore.pubName)
         setICal(UserStore.ical)
         setICalCount(UserStore.icalCount)
+        setICalProxy(false)
+        setICalOnlyRelated(UserStore.icalOnlyShowRelatedCourse)
         setIsModalOpen(false)
     }
 
@@ -65,6 +68,7 @@ export const SettingsBtn = () => {
         UserStore.cid = cid
         UserStore.name = name
         UserStore.pubName = pubName
+        UserStore.icalOnlyShowRelatedCourse = iCalOnlyRelated
         const ical = iCalUrl()
         if (ical !== UserStore.ical) {
             Cache.remove("ics")
@@ -93,6 +97,7 @@ export const SettingsBtn = () => {
                 UserStore.pubName = ""
                 UserStore.ical = ""
                 UserStore.icalCount = 5
+                UserStore.icalOnlyShowRelatedCourse = false
                 Refresh()
             }}>
                 Reset to default
@@ -111,7 +116,12 @@ export const SettingsBtn = () => {
                 <Input size="large" placeholder="Public Name" prefix={<TeamOutlined />} value={pubName} onChange={(e) => setPubName(e.target.value)} />
                 <Input size="large" placeholder="iCal (.ics) URL" prefix={<CalendarOutlined />} value={iCal} onChange={(e) => setICal(e.target.value)} />
                 <InputNumber size="large" prefix={<><CalendarOutlined /> &nbsp; Event Count</>} style={{ width: '100%' }} value={iCalCount} onChange={(e) => e && setICalCount(e)} />
-
+                <Space direction="horizontal">
+                    <Switch checked={iCalOnlyRelated} onChange={(e) => setICalOnlyRelated(e)} />
+                    <Tooltip title="Only show events related to your courses. You have to set modules correctly in order to make the filter can work.">
+                        <span style={{ textDecoration: "underline dotted" }}>Only show related courses</span>
+                    </Tooltip>
+                </Space>
                 <Space direction="horizontal">
                     <Switch checked={iCalProxy} onChange={(e) => setICalProxy(e)} />
                     <Tooltip title="Due to CORS policy, Office365's iCal URLs will not work directly. You can proxy your iCal URL through KevinZonda's server to bypass this restriction, or host your own proxy by following the instruction in the GitHub README. Visit GitHub for further information.">
