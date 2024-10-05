@@ -43,7 +43,7 @@ function iCSDateToString(x: string | ComplexDate | undefined): string {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-function filterEventWithCourse(events: Event[] | undefined) : Event[] | undefined {
+function filterEventWithCourse(events: Event[] | undefined): Event[] | undefined {
     if (!UserStore.icalOnlyShowRelatedCourse) return events
     if (!events) return undefined
     const { courses, ok } = ParseCourseErr(UserStore.courses)
@@ -65,7 +65,7 @@ export async function FetchICS() {
     return icsData
 }
 
-function parse(x : string) {
+function parse(x: string) {
     const parser = new Parser()
     return parser.parse(x)
 }
@@ -82,12 +82,12 @@ export const ICSEvents = () => {
         return parse(icsData)
     })
 
-    if (isLoading) return <div style={{marginTop: 16}}>Events Loading...</div>
-    if (error) return <div style={{marginTop: 16}}>Error loading events</div>
-    if (!data) return <div style={{marginTop: 16}}>No events data</div>
+    if (isLoading) return <div style={{ marginTop: 16 }}>Events Loading...</div>
+    if (error) return <div style={{ marginTop: 16 }}>Error loading events</div>
+    if (!data) return <div style={{ marginTop: 16 }}>No events data</div>
     const eventsRaw = filterEventWithCourse(data.events)
 
-    if (!eventsRaw || eventsRaw.length === 0) return <div style={{marginTop: 16}}>No events</div>
+    if (!eventsRaw || eventsRaw.length === 0) return <div style={{ marginTop: 16 }}>No events</div>
 
     return <>
         <CurrentEvents eventsRaw={eventsRaw} />
@@ -95,7 +95,7 @@ export const ICSEvents = () => {
     </>
 }
 
-const CurrentEvents = ({eventsRaw} : {eventsRaw : Event[]}) => {
+const CurrentEvents = ({ eventsRaw }: { eventsRaw: Event[] }) => {
     const events = eventsRaw.filter((event) => {
         if (!event.start || !event.end) return false
         const left = parseICSDate(event.start)
@@ -106,15 +106,15 @@ const CurrentEvents = ({eventsRaw} : {eventsRaw : Event[]}) => {
     });
     if (!events || events.length === 0) return null
     return (
-        <div className="ics-events">
-            <h2>Current Events</h2>
+        <div className="ics-current-events">
+            <h2 style={{ marginBottom: '0.4rem' }}>Current Events</h2>
             <Events events={events} />
         </div>
     )
 
 }
 
-const UpcomingEvents = ({eventsRaw} : {eventsRaw : Event[]}) => {
+const UpcomingEvents = ({ eventsRaw }: { eventsRaw: Event[] }) => {
     const events = eventsRaw.filter((event) => {
         if (!event.start) return true
         const dt = parseICSDate(event.start)
@@ -124,29 +124,29 @@ const UpcomingEvents = ({eventsRaw} : {eventsRaw : Event[]}) => {
     if (!events || events.length === 0) return <div>No upcoming events</div>
 
     return (
-        <div className="ics-events">
-            <h2>Upcoming Events</h2>
+        <div className="ics-upcoming-events">
+            <h2 style={{ marginBottom: '0.4rem' }}>Upcoming Events</h2>
             <Events events={events} />
         </div>
     );
 };
 
-const Events = ({events} : {events : Event[]}) => {
+const Events = ({ events }: { events: Event[] }) => {
     return (
         <List
-                itemLayout="horizontal"
-                dataSource={events}
-                renderItem={(event) => (
-                    <List.Item>
-                        <List.Item.Meta
-                            title={event.summary}
-                            style={{minWidth: '200px'}}
-                        />
-                        <p style={{ margin: 0 }}>
-                            {event.location ? event.location + ` · ` : "N/A"}
-                            {iCSDateToString(event.start)} - {iCSDateToString(event.end)}
-                        </p>
-                    </List.Item>
-                )} />
+            itemLayout="horizontal"
+            dataSource={events}
+            renderItem={(event) => (
+                <List.Item>
+                    <List.Item.Meta
+                        title={event.summary}
+                        style={{ minWidth: '200px' }}
+                    />
+                    <p style={{ margin: 0 }}>
+                        {event.location ? event.location + ` · ` : "N/A"}
+                        {iCSDateToString(event.start)} - {iCSDateToString(event.end)}
+                    </p>
+                </List.Item>
+            )} />
     )
 }

@@ -93,7 +93,7 @@ export const CourseSection = () => {
         {
             courses && courses.map((group, i) => {
                 return <div key={i}>
-                    <h3>Group {i + 1}</h3>
+                    <h3 style={{ marginBottom: '0.2rem' }}>Group {i + 1}</h3>
                     <List
                         itemLayout="horizontal"
                         dataSource={group}

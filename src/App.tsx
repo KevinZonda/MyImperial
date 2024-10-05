@@ -12,6 +12,7 @@ import { SettingsBtn } from './Settings';
 import { Footer } from './Footer';
 import { ShareBtn } from './import';
 import { ICSEvents } from './ICSEvent';
+import { Underground } from './Underground';
 
 const Welcome = ({ hide }: { hide: boolean }) => {
   const titleStyle: React.CSSProperties = {
@@ -33,6 +34,7 @@ function App() {
       <div style={{ margin: 32 }}>
         <Welcome hide={hide} />
         <WeatherBanner />
+        <Underground />
         <Space direction="horizontal">
           <Button type="primary" onClick={Refresh} icon={<SyncOutlined />} />
           <SettingsBtn />
