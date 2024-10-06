@@ -125,7 +125,7 @@ export const SettingsBtn = () => {
                 <Space direction="horizontal">
                     <Switch checked={iCalProxy} onChange={(e) => setICalProxy(e)} />
                     <Tooltip title="Due to CORS policy, Office365's iCal URLs will not work directly. You can proxy your iCal URL through KevinZonda's server to bypass this restriction, or host your own proxy by following the instruction in the GitHub README. Visit GitHub for further information.">
-                        <span style={{ textDecoration: "underline dotted" }}>Use KevinZonda Office365 iCal Proxy. Enable this will transfer your iCal data through KevinZonda's server, but no data will be stored on the server.</span>
+                        <span style={{ textDecoration: "underline dotted" }}>Use KevinZonda OCPxS (Outlook iCalendar Proxy Service). Enable this will transfer your iCal data through KevinZonda's server, but no data will be stored on the server.</span>
                     </Tooltip>
 
                 </Space>

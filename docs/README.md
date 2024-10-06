@@ -12,3 +12,12 @@ To access your Imperial's calendar you should:
 3. Choose the calendar you want to work with, usually is the `Calendar`.
 4. Select permission to `Can view titles and locations`.
 5. Click `Publish`
+6. Copy the ICS link (a link ends with `.ics`) and do further work.
+
+Now, you got the ICS link, but due to Microsoft's CORS policy, it can only be fetched by several domains, which does not include KevinZonda :: MyImperial. You need to proxy the ICS link to remove CORS restriction.
+
+Otherwise you can use [KevinZonda Outlook iCalendar Proxy Service (OCPxS)](https://ical.kevinzonda.com/). This service is designed to proxy Office365 Outlook iCS link to remove CORS restriction. No data will be stored on the server.
+
+Please be aware, use OCPxS service, you will pass your ICS link and data to the server, even though it will not be stored.If you concern about this, you can host your own OCPxS service. You can get its source code at [GitHub](https://github.com/KevinZonda/MyImperial/tree/master/outlookICalProxy).
+
+To work MyImperial with OCPxS, you need to paste your ICS link to the Settings then enable the proxy switch and save The ICS link will automatically convert into OCPxS link.
