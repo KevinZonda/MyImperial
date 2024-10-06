@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { UserStore } from "../../Store/UserStore.ts";
 import { List, notification } from "antd";
 import { CourseToEd, CourseToIntro, CourseToPanopto, CourseToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
-import { getWindowDimensions } from "../../lib/helper/screen.ts";
+import { useScreenSize } from "../../lib/helper/screen.tsx";
 
 export const Course = () => {
     if (!UserStore.courses) return null
@@ -11,15 +11,7 @@ export const Course = () => {
     const { courses, ok } = ParseCourseErr(UserStore.courses)
     const [api, contextHolder] = notification.useNotification();
 
-    const [wDim, setWDim] = useState(getWindowDimensions());
-
-    useEffect(() => {
-        function handleResize() {
-            setWDim(getWindowDimensions());
-        }
-
-        window.addEventListener('resize', handleResize);
-    }, []);
+    const wDim = useScreenSize();
 
 
     useEffect(() => {

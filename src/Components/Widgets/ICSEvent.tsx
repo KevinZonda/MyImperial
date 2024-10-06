@@ -7,6 +7,7 @@ import {CourseToEd, CourseToPanopto, CourseToScientia, ICourse, IdToScientia, Pa
 import Link from "antd/es/typography/Link";
 import React from "react";
 import {useInterval} from "usehooks-ts";
+import {useScreenSize} from "../../lib/helper/screen.tsx";
 import {ICSDateRangeToString, parseICSDate} from "../../lib/ICS/Date.ts";
 import {parseToCalendar} from "../../lib/ICS/parser.ts";
 
@@ -134,6 +135,7 @@ const FilteredEvents = ({ filter, limit, title, noEvents, eventsRaw, flatCourse 
 }
 
 const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[] | null }) => {
+    const wDim = useScreenSize()
     return (
         <List
             itemLayout="horizontal"
@@ -150,12 +152,10 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                             <Link target="_blank" disabled={!course.ed} href={CourseToEd(course)}>Ed</Link>
                             {` · `}
                             <Link target="_blank" disabled={!course.panopto} href={CourseToPanopto(course)}>Panopto</Link>
-                            {` · `}
                         </>
                     } else {
                         actions = <>
                             <Link target="_blank" href={IdToScientia(ids[0])}>Scientia</Link>
-                            {` · `}
                         </>
                     }
                 }
@@ -168,6 +168,7 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                     />
                     <p style={{ margin: 0 }}>
                         {actions}
+                        {wDim.width < 760 ? <br /> : ` · `}
                         {event.location && event.location + ` · `}
                         {ICSDateRangeToString(event.start, event.end)}
                     </p>
