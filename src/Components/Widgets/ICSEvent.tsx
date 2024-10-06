@@ -21,7 +21,7 @@ function filterEventWithCourse(events: Event[] | undefined, courses: ICourse[] |
     return events.filter((event) => {
         if (!event.summary) return true
         if (!event.summary.startsWith('COMP')) return true
-        return courseCodes.some((course) => event.summary!.includes(course.id) && event.summary!.includes(course.title))
+        return courseCodes.some((course) => event.summary!.includes(course.id))
     })
 }
 
