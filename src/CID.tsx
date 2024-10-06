@@ -5,5 +5,13 @@ export const CID = () => {
     return <p style={{ margin: 0 }}>
         <span style={{ fontWeight: 'bold' }}>CID: </span>
         {UserStore.cid}
+        {
+            UserStore.shortCode &&
+            <>
+                {` · `}
+                <span style={{ fontWeight: 'bold' }}>ShortCode: </span>
+                {UserStore.shortCode}
+            </>
+        }
     </p>
 }
