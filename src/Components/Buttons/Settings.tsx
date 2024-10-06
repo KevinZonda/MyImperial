@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { UserStore } from "./Store/UserStore";
+import { UserStore } from "../../Store/UserStore.ts";
 import { CalendarOutlined, IdcardOutlined, MailOutlined, SettingOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Refresh } from "./helper/browser";
+import { Refresh } from "../../helper/browser.ts";
 import { Button, Input, InputNumber, Modal, notification, Space, Switch, Tooltip } from "antd";
-import { FetchICS } from "./ICSEvent";
-import { Cache } from "./Store/Cache";
+import { FetchICS } from "../Widgets/ICSEvent.tsx";
+import { Cache } from "../../Store/Cache.ts";
 
 export const SyncCalendarBtn = () => {
     const [api, contextHolder] = notification.useNotification();

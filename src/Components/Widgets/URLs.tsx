@@ -1,23 +1,24 @@
-import { UserStore } from "./Store/UserStore"
+import { UserStore } from "../../Store/UserStore.ts"
 import { Card, Col, Row } from "antd"
+import React from "react";
 
-export const DOC_SCIENTIA_URL = "https://scientia.doc.ic.ac.uk/"
-export const DOC_EXAM_URL = "https://exams.doc.ic.ac.uk/"
-export const DOC_INFO_REGI = "https://infosys.doc.ic.ac.uk/internalreg/subscription.cgi"
-export const DOC_TEACHING = "https://teaching.doc.ic.ac.uk/"
-export const PANOPTO = "https://imperial.cloud.panopto.eu/"
-export const MY_IMPERIAL = "https://my.imperial.ac.uk/"
-export const GITLAB = "https://gitlab.doc.ic.ac.uk/"
-export const IMPERIAL_MAIL = "https://outlook.office.com/mail/inbox"
-export const PERSONAL_PAGE = (x: string) => x ? `https://www.doc.ic.ac.uk/~${x}` : ''
-export const CALENDAR = (cid: string) => cid ? `https://www.imperial.ac.uk/timetabling/calendar/cal?vt=month&et=student&fid0=${cid}` : ''
-export const BB = "https://bb.imperial.ac.uk/"
-export const DOC_LABTS = 'https://teaching.doc.ic.ac.uk/labts'
-export const ED = "https://edstem.org/"
-export const DOC_LAB = 'https://www.imperial.ac.uk/computing/people/csg/facilities/lab/workstations/'
-export const DOC_BOOK_LAB_ROOM = 'https://mrbs.doc.ic.ac.uk/lab/index.php'
-export const BOOK_LIBRARY_ROOM = 'https://connect2.lib.ic.ac.uk/Connect2/'
-export const GOV_UK_EVISA = 'https://www.gov.uk/view-prove-immigration-status'
+const DOC_SCIENTIA_URL = "https://scientia.doc.ic.ac.uk/"
+const DOC_EXAM_URL = "https://exams.doc.ic.ac.uk/"
+const DOC_INFO_REGI = "https://infosys.doc.ic.ac.uk/internalreg/subscription.cgi"
+const DOC_TEACHING = "https://teaching.doc.ic.ac.uk/"
+const PANOPTO = "https://imperial.cloud.panopto.eu/"
+const MY_IMPERIAL = "https://my.imperial.ac.uk/"
+const GITLAB = "https://gitlab.doc.ic.ac.uk/"
+const IMPERIAL_MAIL = "https://outlook.office.com/mail/inbox"
+const PERSONAL_PAGE = (x: string) => x ? `https://www.doc.ic.ac.uk/~${x}` : ''
+const CALENDAR = (cid: string) => cid ? `https://www.imperial.ac.uk/timetabling/calendar/cal?vt=month&et=student&fid0=${cid}` : ''
+const BB = "https://bb.imperial.ac.uk/"
+const DOC_LABTS = 'https://teaching.doc.ic.ac.uk/labts'
+const ED = "https://edstem.org/"
+const DOC_LAB = 'https://www.imperial.ac.uk/computing/people/csg/facilities/lab/workstations/'
+const DOC_BOOK_LAB_ROOM = 'https://mrbs.doc.ic.ac.uk/lab/index.php'
+const BOOK_LIBRARY_ROOM = 'https://connect2.lib.ic.ac.uk/Connect2/'
+const GOV_UK_EVISA = 'https://www.gov.uk/view-prove-immigration-status'
 export interface Section {
     title: string
     urls: Map<string, string>
@@ -50,18 +51,19 @@ export const URLs = (shortCode: string, cid: string) => {
     ]
 }
 
-const clickableGrid: React.CSSProperties = {
+const gridCss : React.CSSProperties = {
     width: '100%',
     textAlign: 'center',
-    cursor: 'pointer',
     fontSize: '1.3em',
+};
+const clickableGrid: React.CSSProperties = {
+    cursor: 'pointer',
+    ...gridCss
 };
 
 const unClickableGrid: React.CSSProperties = {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: '1.3em',
-    textDecoration: 'line-through'
+    textDecoration: 'line-through',
+    ...gridCss
 };
 
 export const URLList = () => {

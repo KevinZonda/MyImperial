@@ -1,4 +1,4 @@
-import { UserStore } from "./Store/UserStore"
+import { UserStore } from "../../Store/UserStore.ts"
 
 export const CID = () => {
     if (!UserStore.cid) return null

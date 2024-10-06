@@ -1,7 +1,6 @@
-import { COLOUR_IMPERIAL_BLUE } from "./const/Colour"
+import { COLOUR_IMPERIAL_BLUE } from "../../const/Colour.ts"
 
 export const Footer = () => {
-    
     return (
         <div style={{backgroundColor: COLOUR_IMPERIAL_BLUE, color: 'white', paddingLeft: 32, paddingRight: 32, paddingTop: '21px', paddingBottom: '18px'}}>
             <p style={{marginTop: 0, marginBottom: 0}}>KevinZonda :: MyImperial</p>

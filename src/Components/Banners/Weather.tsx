@@ -1,6 +1,6 @@
 import useSWR from "swr"
-import { getWeather, willRain } from "./lib/Weather/Weather"
-import { getWeatherCode } from "./lib/Weather/WeatherCode"
+import { getWeather, willRain } from "../../lib/Weather/Weather.ts"
+import { getWeatherCode } from "../../lib/Weather/WeatherCode.ts"
 
 export const WeatherBanner = () => {
     const { data, error, isLoading } = useSWR('/weather', getWeather)

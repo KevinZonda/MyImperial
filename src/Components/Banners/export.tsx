@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserStore } from "./Store/UserStore";
+import { UserStore } from "../../Store/UserStore.ts";
 import { Button, Modal, notification, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { CloudDownloadOutlined } from "@ant-design/icons";
@@ -24,10 +24,11 @@ export const ExportBtn = () => {
 
         <Modal title="Export" open={isModalOpen} onOk={closeModal} onCancel={closeModal} footer={[
             <Button key="copy" onClick={() => {
-                navigator.clipboard.writeText(UserStore.export())
-                api.success({
-                    message: 'Copied',
-                    description: 'Your data has been copied to clipboard'
+                navigator.clipboard.writeText(UserStore.export()).then(() => {
+                    api.success({
+                        message: 'Copied',
+                        description: 'Your data has been copied to clipboard'
+                    })
                 })
             }}>
                 Copy

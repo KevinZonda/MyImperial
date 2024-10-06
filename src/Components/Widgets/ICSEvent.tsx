@@ -1,10 +1,10 @@
 import useSWR from "swr";
 import { ComplexDate, Parser } from "ikalendar";
 import { List } from "antd";
-import { UserStore } from "./Store/UserStore";
-import { Cache } from "./Store/Cache";
+import { UserStore } from "../../Store/UserStore.ts";
+import { Cache } from "../../Store/Cache.ts";
 import { Event } from "ikalendar";
-import { CourseToEd, ICourse, IdToScientia, ParseCourseErr } from "./lib/Parser/parser";
+import { CourseToEd, ICourse, IdToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
 
 function iCalDate(x: string): Date | undefined {

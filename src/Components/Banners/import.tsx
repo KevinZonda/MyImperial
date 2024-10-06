@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { UserStore } from "./Store/UserStore";
+import { UserStore } from "../../Store/UserStore.ts";
 import { Button, Modal, notification, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { CloudUploadOutlined, ShareAltOutlined } from "@ant-design/icons";
-import { Refresh } from "./helper/browser";
-import { ExportBtn } from "./export";
+import { CloudUploadOutlined } from "@ant-design/icons";
+import { Refresh } from "../../helper/browser.ts";
 
 export const ImportBtn = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,27 +58,3 @@ export const ImportBtn = () => {
     </>
 }
 
-
-export const ShareBtn = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const closeModal = () => {
-        setIsModalOpen(false)
-    }
-
-    return <>
-        <Button type="primary" onClick={() => { setIsModalOpen(true) }} icon={<ShareAltOutlined />} />
-
-
-        <Modal title="Share Your Config" open={isModalOpen} onOk={closeModal} onCancel={closeModal} footer={[
-            <Button key="back" onClick={closeModal}>
-                Cancel
-            </Button>
-        ]}>
-            <Space direction="horizontal" style={{ width: '100%' }}>
-                <ImportBtn />
-                <ExportBtn />
-            </Space>
-        </Modal>
-
-    </>
-}
