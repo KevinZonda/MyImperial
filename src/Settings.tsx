@@ -35,6 +35,7 @@ export const SyncCalendarBtn = () => {
 
 
 export const SettingsBtn = () => {
+    const isUsingCOPxS = UserStore.ical.startsWith("https://ical.kevinzonda.com/")
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [shortCode, setShortCode] = useState(UserStore.shortCode)
     const [cid, setCid] = useState(UserStore.cid)
@@ -42,7 +43,7 @@ export const SettingsBtn = () => {
     const [pubName, setPubName] = useState(UserStore.pubName)
     const [iCal, setICal] = useState(UserStore.ical)
     const [iCalCount, setICalCount] = useState(UserStore.icalCount)
-    const [iCalProxy, setICalProxy] = useState(false)
+    const [iCalProxy, setICalProxy] = useState(isUsingCOPxS)
     const [iCalOnlyRelated, setICalOnlyRelated] = useState(UserStore.icalOnlyShowRelatedCourse)
     const onCancel = () => {
         setShortCode(UserStore.shortCode)
@@ -51,7 +52,7 @@ export const SettingsBtn = () => {
         setPubName(UserStore.pubName)
         setICal(UserStore.ical)
         setICalCount(UserStore.icalCount)
-        setICalProxy(false)
+        setICalProxy(isUsingCOPxS)
         setICalOnlyRelated(UserStore.icalOnlyShowRelatedCourse)
         setIsModalOpen(false)
     }

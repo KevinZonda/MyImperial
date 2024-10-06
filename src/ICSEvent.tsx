@@ -80,6 +80,9 @@ function filterEventWithCourse(events: Event[] | undefined, courses: ICourse[] |
 export async function FetchICS() {
     const response = await fetch(UserStore.ical);
     const icsData = await response.text();
+    if (response.status !== 200) {
+        throw new Error(`Failed to fetch ics: ${response.statusText}`)
+    }
 
     Cache.set('ics', icsData, 1000 * 60 * 60 * 24) // Cache for 24 hours
     return icsData
