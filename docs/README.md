@@ -21,3 +21,32 @@ Otherwise you can use [KevinZonda OCPxS (Outlook iCalendar Proxy Service)](https
 Please be aware, use OCPxS service, you will pass your ICS link and data to the server, even though it will not be stored. If you concern about this, you can refer to the [instruction](./OCPxS.md) to host your own OCPxS service.
 
 To work MyImperial with OCPxS, you need to paste your ICS link to the Settings then enable the proxy switch and save The ICS link will automatically convert into OCPxS link.
+
+## Module/Course
+
+You may need setup Module in order to work with calendar filter.
+
+> I personally recommand you only set Module with Level 3 courses.
+
+Go to infosys, you should copy all course you want to add. It might look like `70000 Computer Science Introduction` (format with `moduleId moduleName`).
+
+Then go to the same module in the Ed, its URL may look like `https://edstem.org/us/courses/67000/discussion/`, the part `67000` is `edId`
+
+You then can combine into a string with format `moduleId | moduleName | edId` (e.g. `70000 | Computer Science Introduction | 67000`).
+
+You can use `---` as separator to split modules into groups.
+
+Your modules string may look like:
+
+```
+70000 | Computer Science Introduction | 67000
+70090 | Computer Science Introduction | 61000
+70080 | Computer Science Introduction | 60000
+---
+70100 | Computer Science Introduction | 69032
+72000 | Computer Science Introduction | 63230
+70001 | Computer Science Introduction | 60000
+
+```
+
+
