@@ -3,7 +3,7 @@ import { UserStore } from "../../Store/UserStore.ts";
 import { Button, Modal, notification, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { CloudUploadOutlined } from "@ant-design/icons";
-import { Refresh } from "../../helper/browser.ts";
+import { Refresh } from "../../lib/helper/browser.ts";
 
 export const ImportBtn = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

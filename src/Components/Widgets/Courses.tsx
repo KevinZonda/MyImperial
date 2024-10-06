@@ -3,7 +3,7 @@ import { UserStore } from "../../Store/UserStore.ts";
 import { List, notification } from "antd";
 import { CourseToEd, CourseToIntro, CourseToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
-import { getWindowDimensions } from "../../helper/screen.ts";
+import { getWindowDimensions } from "../../lib/helper/screen.ts";
 
 export const Course = () => {
     if (!UserStore.courses) return null

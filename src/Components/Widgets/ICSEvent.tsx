@@ -6,6 +6,8 @@ import { Cache } from "../../Store/Cache.ts";
 import { Event } from "ikalendar";
 import { CourseToEd, ICourse, IdToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
+import React from "react";
+import {useInterval} from "usehooks-ts";
 
 function iCalDate(x: string): Date | undefined {
     try {
@@ -122,37 +124,73 @@ export const ICSEvents = () => {
 }
 
 const CurrentEvents = ({ eventsRaw, flatCourse }: { eventsRaw: Event[], flatCourse: ICourse[] | null }) => {
-    const events = eventsRaw.filter((event) => {
+    const filter = (events: Event[]) => events.filter((event) => {
         const left = parseICSDate(event.start)
         const right = parseICSDate(event.end)
         if (!left || !right) return false
         return left.getTime() <= Date.now() && right.getTime() >= Date.now()
-    });
-    if (!events || events.length === 0) return null
+    })
+
+    return <FilteredEvents
+        filter={filter}
+        title="Current Events"
+        noEvents={<></>}
+        eventsRaw={eventsRaw}
+        flatCourse={flatCourse}
+    />
+
+}
+
+const UpcomingEvents = ({ eventsRaw, flatCourse }: { eventsRaw: Event[], flatCourse: ICourse[] | null }) => {
+    const filter = (events: Event[]) => events.filter((event) => {
+        const dt = parseICSDate(event.start)
+        if (!dt) return true
+        return dt.getTime() > Date.now()
+    })
+
+    return <FilteredEvents
+        filter={filter}
+        limit={UserStore.icalCount}
+        title="Upcoming Events"
+        noEvents={<div>No upcoming events</div>}
+        eventsRaw={eventsRaw}
+        flatCourse={flatCourse}
+    />
+};
+
+type filterFx = (events: Event[]) => Event[] | undefined
+
+interface IFilteredEvents {
+    filter: filterFx
+    limit?: number
+    title: string
+    noEvents?: React.ReactElement
+    eventsRaw: Event[]
+    flatCourse: ICourse[] | null
+}
+
+const FilteredEvents = ({ filter, limit, title, noEvents, eventsRaw, flatCourse }: IFilteredEvents) => {
+    const process = () => {
+        console.log('Processing', title)
+        const evts = filter(eventsRaw)
+        return limit ? evts?.slice(0, limit) : evts
+    }
+
+    const [events, setEvents] = React.useState(process())
+    useInterval(() => setEvents(process()), 1000 * 60 * 60) // Refresh every hour
+
+    if (!events || events.length === 0) return (
+        noEvents ? noEvents : <div>No {title.toLowerCase()}</div>
+    )
+
     return (
-        <div className="ics-current-events">
-            <h2 style={{ marginBottom: '0.4rem' }}>Current Events</h2>
+        <div>
+            <h2 style={{ marginBottom: '0.4rem' }}>{title}</h2>
             <Events events={events} flatCourse={flatCourse} />
         </div>
     )
 
 }
-
-const UpcomingEvents = ({ eventsRaw, flatCourse }: { eventsRaw: Event[], flatCourse: ICourse[] | null }) => {
-    const events = eventsRaw.filter((event) => {
-        const dt = parseICSDate(event.start)
-        if (!dt) return true
-        return dt.getTime() > Date.now()
-    }).slice(0, UserStore.icalCount);
-    if (!events || events.length === 0) return <div>No upcoming events</div>
-
-    return (
-        <div className="ics-upcoming-events">
-            <h2 style={{ marginBottom: '0.4rem' }}>Upcoming Events</h2>
-            <Events events={events} flatCourse={flatCourse} />
-        </div>
-    );
-};
 
 const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[] | null }) => {
     return (

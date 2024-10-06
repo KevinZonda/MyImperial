@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { UserStore } from "../../Store/UserStore.ts";
 import { CalendarOutlined, IdcardOutlined, MailOutlined, SettingOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Refresh } from "../../helper/browser.ts";
+import { Refresh } from "../../lib/helper/browser.ts";
 import { Button, Input, InputNumber, Modal, notification, Space, Switch, Tooltip } from "antd";
 import { FetchICS } from "../Widgets/ICSEvent.tsx";
 import { Cache } from "../../Store/Cache.ts";

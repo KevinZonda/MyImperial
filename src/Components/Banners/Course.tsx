@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UserStore } from "../../Store/UserStore";
-import { Refresh } from "../../helper/browser";
+import { Refresh } from "../../lib/helper/browser";
 import { FormOutlined } from "@ant-design/icons";
 import { Button, Input, Modal, Space } from "antd";
 

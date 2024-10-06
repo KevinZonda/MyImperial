@@ -5,7 +5,7 @@ import { UserStore } from './Store/UserStore';
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour';
 import { useState } from 'react';
 import { EyeInvisibleOutlined, EyeOutlined, GithubOutlined, SyncOutlined } from '@ant-design/icons';
-import { Refresh } from './helper/browser';
+import { Refresh } from './lib/helper/browser';
 import { WeatherBanner } from './Components/Banners/Weather.tsx';
 import { Course } from './Components/Widgets/Courses.tsx';
 import { SettingsBtn } from './Components/Buttons/Settings.tsx';
