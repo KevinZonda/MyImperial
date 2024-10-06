@@ -12,6 +12,7 @@ import { enGB } from 'date-fns/locale/en-GB'
 import { Modal } from 'antd'
 import { EventsWithCourse, EventToScientiaIDs, useICSData } from './iCSData'
 import Link from 'antd/es/typography/Link'
+import { splitOnce } from '../../lib/helper/text'
 
 
 const locales = {
@@ -76,10 +77,14 @@ const WeekCalendar = () => {
                         title: e.title,
                         content: (
                             <div>
-                                <p>{e.data.description}</p>
+                                {e.data.description && <p>{
+                                    e.data.description.split('\n').map((x) => {
+                                        const sp = splitOnce(x, ':')
+
+                                        return sp.length === 2 ? <span><b>{sp[0]}:</b> {sp[1]}<br /></span> : <>{x}<br /></>
+                                    })}</p>}
                                 <p>{e.data.location}</p>
                                 {ICSDateRangeToString(e.data.start, e.data.end)}
-                                {e.data.description && <p>{e.data.description}</p>}
                                 {actions && <p>{actions}</p>}
                             </div>
                         ),

@@ -1,3 +1,7 @@
 :root {
   font-family: "PT Sans", sans-serif;
 }
+
+span, p, b {
+  font-family: "PT Sans", sans-serif;
+}

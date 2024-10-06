@@ -1,9 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import { ConfigProvider } from 'antd'
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour.ts'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -21,7 +22,7 @@ createRoot(document.getElementById('root')!).render(
         }
       }}
     >
-      <App />
+      <RouterProvider router={router} />
     </ConfigProvider>
   </StrictMode>,
 )

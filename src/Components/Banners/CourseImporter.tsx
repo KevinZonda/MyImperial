@@ -4,11 +4,7 @@ import { useState } from "react";
 import { UserStore } from "../../Store/UserStore";
 import { Refresh } from "../../lib/helper/browser";
 import { ParseCourseErr } from "../../lib/Parser/parser";
-
-const splitOnce = (str: string, separator: string) => {
-    const i = str.indexOf(separator);
-    return [str.slice(0, i), str.slice(i + 1)];
-}
+import { splitOnce } from "../../lib/helper/text";
 
 function initialSelection(): Record<string, boolean> {
     const { courses, ok } = ParseCourseErr(UserStore.courses)
