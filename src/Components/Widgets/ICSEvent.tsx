@@ -1,4 +1,4 @@
-import { List } from "antd";
+import { List, Modal } from "antd";
 import { UserStore } from "../../Store/UserStore.ts";
 import { Event } from "ikalendar";
 import { CourseToEd, CourseToPanopto, CourseToScientia, ICourse, IdToScientia } from "../../lib/Parser/parser.ts";
@@ -8,6 +8,7 @@ import { useInterval } from "usehooks-ts";
 import { useScreenSize } from "../../lib/helper/screen.tsx";
 import { ICSDateRangeToString, parseICSDate } from "../../lib/ICS/Date.ts";
 import { EventsWithCourse, EventToScientiaIDs, useICSData } from "./iCSData.tsx";
+import { splitOnce } from "../../lib/helper/text.ts";
 
 const MarginDiv = ({ children }: { children: React.ReactNode }) => <div style={{ marginTop: 16 }}>{children}</div>
 
@@ -128,18 +129,46 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                 }
 
 
-                return <List.Item>
-                    <List.Item.Meta
-                        title={event.summary}
-                        style={{ minWidth: '200px' }}
-                    />
+                return <List.Item >
+                    <Link onClick={() => { ModalEvent(event, actions) }}>
+                        <List.Item.Meta
+                            title={event.summary}
+                            style={{ minWidth: '200px' }}
+                        />
+                    </Link>
+
                     <p style={{ margin: 0 }}>
                         {actions}
-                        {(actions && wDim.width < 760) ? <br /> : ` · `}
+                        {actions && (wDim.width < 760 ? <br /> : ` · `)}
                         {event.location && event.location + ` · `}
                         {ICSDateRangeToString(event.start, event.end)}
                     </p>
                 </List.Item>
             }} />
     )
+}
+
+
+export const ModalEvent = (e: Event, actions: React.ReactElement | null) => {
+    Modal.info({
+        title: e.summary,
+        content: (
+            <div>
+                {e.description && <p style={{ margin: 0 }}>{
+                    e.description.split('\n').map((x) => {
+                        const sp = splitOnce(x, ':')
+
+                        return sp.length === 2
+                            ? <span><b>{sp[0]}:</b> {sp[1]}<br /></span>
+                            : <>{x}<br /></>
+                    })}</p>}
+                <p>
+
+                    <span><b>Location:</b> {e.location}</span><br />
+                    <span><b>Time:</b> {ICSDateRangeToString(e.start, e.end)}</span>
+                </p>
+                {actions && <p>{actions}</p>}
+            </div>
+        ),
+    });
 }

@@ -2,17 +2,16 @@ import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { UserStore } from '../../Store/UserStore'
 import { CourseToEd, CourseToPanopto, CourseToScientia, IdToScientia } from '../../lib/Parser/parser'
-import { ICSDateRangeToString, parseICSDate } from '../../lib/ICS/Date'
+import { parseICSDate } from '../../lib/ICS/Date'
 
 import { format } from 'date-fns/format'
 import { parse } from 'date-fns/parse'
 import { startOfWeek } from 'date-fns/startOfWeek'
 import { getDay } from 'date-fns/getDay'
 import { enGB } from 'date-fns/locale/en-GB'
-import { Modal } from 'antd'
 import { EventsWithCourse, EventToScientiaIDs, useICSData } from './iCSData'
 import Link from 'antd/es/typography/Link'
-import { splitOnce } from '../../lib/helper/text'
+import { ModalEvent } from './ICSEvent'
 
 
 const locales = {
@@ -72,29 +71,14 @@ const WeekCalendar = () => {
                             </>
                         }
                     }
-
-                    Modal.info({
-                        title: e.title,
-                        content: (
-                            <div>
-                                {e.data.description && <p>{
-                                    e.data.description.split('\n').map((x) => {
-                                        const sp = splitOnce(x, ':')
-
-                                        return sp.length === 2 ? <span><b>{sp[0]}:</b> {sp[1]}<br /></span> : <>{x}<br /></>
-                                    })}</p>}
-                                <p>{e.data.location}</p>
-                                {ICSDateRangeToString(e.data.start, e.data.end)}
-                                {actions && <p>{actions}</p>}
-                            </div>
-                        ),
-                    });
+                    ModalEvent(e.data, actions)
                 }}
             />
         </div>
 
     );
 }
+
 
 const NoEventCalendar = () => {
     return <div style={{ marginTop: 16, marginBottom: 16 }}>
