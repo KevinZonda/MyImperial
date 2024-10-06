@@ -15,21 +15,17 @@ export const ImportBtn = () => {
     }
 
     const onSave = () => {
-        let success = true
         try {
             UserStore.import(importValue)
         } catch (e) {
-            success = false
             api.error({
                 message: 'Import Failed',
                 description: String(e)
             })
             return
         }
-        if (success) {
-            closeModal()
-            Refresh()
-        }
+        closeModal()
+        Refresh()
     }
 
 

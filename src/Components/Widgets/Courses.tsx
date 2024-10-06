@@ -23,9 +23,7 @@ export const Course = () => {
 
 
     useEffect(() => {
-        if (ok) {
-            return
-        }
+        if (ok)  return
         api.error({
             message: 'Error',
             description: 'Invalid course format, please check and try again.',

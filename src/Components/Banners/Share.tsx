@@ -13,7 +13,6 @@ export const ShareBtn = () => {
     return <>
         <Button type="primary" onClick={() => { setIsModalOpen(true) }} icon={<ShareAltOutlined />} />
 
-
         <Modal title="Share Your Config" open={isModalOpen} onOk={closeModal} onCancel={closeModal} footer={[
             <Button key="back" onClick={closeModal}>
                 Cancel
