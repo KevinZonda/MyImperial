@@ -1,4 +1,4 @@
-# Host Your Own OCPxS (Outlook Calendar Proxy Service)
+# Host Your Own OCPxS (Outlook iCalendar Proxy Service)
 
 OCPxS is a service designed to proxy Office365 Outlook iCS link to remove CORS restriction.
 
