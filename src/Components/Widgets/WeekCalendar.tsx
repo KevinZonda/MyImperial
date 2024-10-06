@@ -79,6 +79,7 @@ const WeekCalendar = () => {
                                 <p>{e.data.description}</p>
                                 <p>{e.data.location}</p>
                                 {ICSDateRangeToString(e.data.start, e.data.end)}
+                                {e.data.description && <p>{e.data.description}</p>}
                                 {actions && <p>{actions}</p>}
                             </div>
                         ),
