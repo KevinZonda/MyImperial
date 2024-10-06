@@ -28,7 +28,7 @@ export const Course = () => {
     }
 
     const quote = (c: string) => {
-        return wDim.width < 560 ? '' : c
+        return wDim.width < 660 ? '' : c
     }
     return <>
         <h2>Modules</h2>
@@ -42,17 +42,28 @@ export const Course = () => {
                         dataSource={group}
                         renderItem={(item) => (
                             <List.Item
-                                actions={[
+                                actions={
+                                    wDim.width >= 500 ? [
                                     <Link target="_blank" href={CourseToIntro(item)}>Info</Link>,
                                     <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>,
                                     <Link target="_blank" disabled={!item.ed} href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>,
                                     <Link target="_blank" disabled={!item.panopto} href={CourseToPanopto(item)}>Panopto</Link>
-                                ]}
+                                ] : undefined}
                             >
 
                                 <List.Item.Meta
                                     title={item.name}
-                                    style={{ minWidth: '200px' }}
+                                    style={{ minWidth: '180px' }}
+                                    description={wDim.width < 500 && <>
+                                    <Link target="_blank" href={CourseToIntro(item)}>Info</Link>
+                                    { ` · ` }
+                                    <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>
+                                    { ` · ` }
+                                    <Link target="_blank" disabled={!item.ed} href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>
+                                    { ` · ` }
+                                    <Link target="_blank" disabled={!item.panopto} href={CourseToPanopto(item)}>Panopto</Link>
+                            
+                                    </>}
                                 />
                             </List.Item>
                         )}
