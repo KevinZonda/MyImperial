@@ -33,7 +33,7 @@ Go to infosys, you should copy all course you want to add. It might look like `7
 
 Then go to the same module in the Ed, its URL may look like `https://edstem.org/us/courses/67000/discussion/`, the part `67000` is `edId`
 
-You then can combine into a string with format `moduleId | moduleName | edId` (e.g. `70000 | Computer Science Introduction | 67000`).
+You then can combine into a string with format `moduleId | moduleName | edId` (e.g. `70000 | Computer Science Introduction | 67000`). If you do not have the `edId`, you can leave it empty, but do not ignore the last `|`, i.e., `moduleId | moduleName |`.
 
 You can use `---` as separator to split modules into groups.
 
@@ -45,6 +45,7 @@ Your modules string may look like:
 70080 | Computer Science Introduction | 60000
 ---
 70100 | Computer Science Introduction | 69032
+70100 | Computer Science Introduction |
 72000 | Computer Science Introduction | 63230
 70001 | Computer Science Introduction | 60000
 
