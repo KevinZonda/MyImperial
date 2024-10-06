@@ -27,8 +27,8 @@ export const Course = () => {
         </>
     }
 
-    const quote = (c: string) => {
-        return wDim.width < 660 ? '' : c
+    const quote = (c: string, w : number = 660) => {
+        return wDim.width < w ? '' : c
     }
     return <>
         <h2>Modules</h2>
@@ -57,9 +57,9 @@ export const Course = () => {
                                     description={wDim.width < 500 && <>
                                     <Link target="_blank" href={CourseToIntro(item)}>Info</Link>
                                     { ` · ` }
-                                    <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>
+                                    <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`, 360)}</Link>
                                     { ` · ` }
-                                    <Link target="_blank" disabled={!item.ed} href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>
+                                    <Link target="_blank" disabled={!item.ed} href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`, 360)}</Link>
                                     { ` · ` }
                                     <Link target="_blank" disabled={!item.panopto} href={CourseToPanopto(item)}>Panopto</Link>
                             
