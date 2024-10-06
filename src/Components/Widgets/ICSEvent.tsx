@@ -168,7 +168,7 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                     />
                     <p style={{ margin: 0 }}>
                         {actions}
-                        {wDim.width < 760 ? <br /> : ` · `}
+                        {(actions && wDim.width < 760) ? <br /> : ` · `}
                         {event.location && event.location + ` · `}
                         {ICSDateRangeToString(event.start, event.end)}
                     </p>
