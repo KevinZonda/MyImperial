@@ -5,6 +5,7 @@ import { Refresh } from "../../lib/helper/browser.ts";
 import { Button, Input, InputNumber, Modal, notification, Space, Switch, Tooltip } from "antd";
 import { FetchICS } from "../Widgets/iCSData.tsx";
 import { Cache } from "../../Store/Cache.ts";
+import { DocumentBtn } from "./Document.tsx";
 
 export const SyncCalendarBtn = () => {
     const [api, contextHolder] = notification.useNotification();
@@ -130,9 +131,10 @@ export const SettingsBtn = () => {
                     </Tooltip>
 
                 </Space>
-
-
-                <SyncCalendarBtn />
+                <Space direction="horizontal">
+                    <DocumentBtn />
+                    <SyncCalendarBtn />
+                </Space>
             </Space>
         </Modal>
 
