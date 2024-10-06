@@ -11,7 +11,7 @@ const MY_IMPERIAL = "https://my.imperial.ac.uk/"
 const GITLAB = "https://gitlab.doc.ic.ac.uk/"
 const IMPERIAL_MAIL = "https://outlook.office.com/mail/inbox"
 const PERSONAL_PAGE = (x: string) => x ? `https://www.doc.ic.ac.uk/~${x}` : ''
-const CALENDAR = (cid: string) => cid ? `https://www.imperial.ac.uk/timetabling/calendar/cal?vt=month&et=student&fid0=${cid}` : ''
+const CALENDAR = (cid: string) => cid ? `https://www.imperial.ac.uk/timetabling/calendar/cal?vt=week&et=student&fid0=${cid}` : ''
 const BB = "https://bb.imperial.ac.uk/"
 const DOC_LABTS = 'https://teaching.doc.ic.ac.uk/labts'
 const ED = "https://edstem.org/"
