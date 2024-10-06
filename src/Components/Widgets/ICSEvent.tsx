@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { ComplexDate, Parser } from "ikalendar";
 import { List } from "antd";
 import { UserStore } from "../../Store/UserStore.ts";
 import { Cache } from "../../Store/Cache.ts";
@@ -8,64 +7,8 @@ import { CourseToEd, ICourse, IdToScientia, ParseCourseErr } from "../../lib/Par
 import Link from "antd/es/typography/Link";
 import React from "react";
 import {useInterval} from "usehooks-ts";
-
-function iCalDate(x: string): Date | undefined {
-    try {
-        const year = parseInt(x.slice(0, 4));
-        const month = parseInt(x.slice(4, 6)) - 1; // Month is 0-indexed in JS Date
-        const day = parseInt(x.slice(6, 8));
-        const hours = parseInt(x.slice(9, 11));
-        const minutes = parseInt(x.slice(11, 13));
-        const seconds = parseInt(x.slice(13, 15));
-        return new Date(year, month, day, hours, minutes, seconds);
-    } catch (e) {
-        console.error(e)
-        return undefined
-    }
-}
-
-function parseICSDate(x: string | ComplexDate | undefined): Date | undefined {
-    if (!x) return undefined
-    if (typeof x === 'string') {
-        return iCalDate(x)
-    }
-    return iCalDate(x.value)
-}
-
-const pad = (num: number) => num.toString().padStart(2, '0');
-
-function dateToTime(date: Date) {
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    return `${hours}:${minutes}`
-}
-
-function dateToDate(date: Date) {
-    const day = pad(date.getDate());
-    const month = pad(date.getMonth() + 1); // getMonth() returns 0-11
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`
-}
-
-function dateToFullDate(date: Date | undefined) {
-    if (!date) return 'N/A'
-    return `${dateToDate(date)} ${dateToTime(date)}`
-}
-
-function iCSTDateRangeToString(start: string | ComplexDate | undefined, end: string | ComplexDate | undefined): string {
-    const left = parseICSDate(start)
-    const right = parseICSDate(end)
-    if (left && right) {
-        const leftDate = dateToDate(left)
-        const leftTime = dateToTime(left)
-        const rightDate = dateToDate(right)
-        const rightTime = dateToTime(right)
-        return leftDate === rightDate
-            ? `${leftDate} ${leftTime} - ${rightTime}`
-            : `${leftDate} ${leftTime} - ${rightDate} ${rightTime}`
-    }
-    return `${dateToFullDate(left)} - ${dateToFullDate(right)}`
-}
+import {ICSDateRangeToString, parseICSDate} from "../../lib/ICS/Date.ts";
+import {parseToCalendar} from "../../lib/ICS/parser.ts";
 
 function filterEventWithCourse(events: Event[] | undefined, courses: ICourse[] | null): Event[] | undefined {
     if (!UserStore.icalOnlyShowRelatedCourse) return events
@@ -90,26 +33,22 @@ export async function FetchICS() {
     return icsData
 }
 
-function parse(x: string) {
-    const parser = new Parser()
-    return parser.parse(x)
-}
+const MarginDiv = ({ children }: { children: React.ReactNode }) => <div style={{ marginTop: 16 }}>{children}</div>
 
 
 export const ICSEvents = () => {
     if (!UserStore.ical) return null
     const { data, error, isLoading } = useSWR('/ics', async () => {
-        const cached = Cache.get('ics')
-        if (cached) {
-            return parse(cached)
-        }
-        const icsData = await FetchICS()
-        return parse(icsData)
+        const icsData = Cache.get('ics') || await FetchICS()
+        return parseToCalendar(icsData)
     })
 
-    if (isLoading) return <div style={{ marginTop: 16 }}>Events Loading...</div>
-    if (error) return <div style={{ marginTop: 16 }}>Error loading events</div>
-    if (!data) return <div style={{ marginTop: 16 }}>No events data</div>
+    if (isLoading) return <MarginDiv>Events Loading...</MarginDiv>
+    if (error) {
+        console.error(error)
+        return <MarginDiv>Error loading events</MarginDiv>
+    }
+    if (!data) return <MarginDiv>No events data</MarginDiv>
 
     const { courses, ok } = ParseCourseErr(UserStore.courses)
     const flatCourses = !ok ? null : (!courses ? null : courses.flat())
@@ -184,10 +123,10 @@ const FilteredEvents = ({ filter, limit, title, noEvents, eventsRaw, flatCourse 
     )
 
     return (
-        <div>
+        <>
             <h2 style={{ marginBottom: '0.4rem' }}>{title}</h2>
             <Events events={events} flatCourse={flatCourse} />
-        </div>
+        </>
     )
 
 }
@@ -222,8 +161,8 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                     />
                     <p style={{ margin: 0 }}>
                         {actions}
-                        {event.location ? event.location + ` · ` : "N/A"}
-                        {iCSTDateRangeToString(event.start, event.end)}
+                        {event.location && event.location + ` · `}
+                        {ICSDateRangeToString(event.start, event.end)}
                     </p>
                 </List.Item>
             }} />
