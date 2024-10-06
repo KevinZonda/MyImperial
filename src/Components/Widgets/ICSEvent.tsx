@@ -3,7 +3,7 @@ import { List } from "antd";
 import { UserStore } from "../../Store/UserStore.ts";
 import { Cache } from "../../Store/Cache.ts";
 import { Event } from "ikalendar";
-import {CourseToEd, CourseToScientia, ICourse, IdToScientia, ParseCourseErr} from "../../lib/Parser/parser.ts";
+import {CourseToEd, CourseToPanopto, CourseToScientia, ICourse, IdToScientia, ParseCourseErr} from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
 import React from "react";
 import {useInterval} from "usehooks-ts";
@@ -147,7 +147,9 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                         actions = <>
                             <Link target="_blank" href={CourseToScientia(course)}>Scientia</Link>
                             {` · `}
-                            <Link target="_blank" href={CourseToEd(course)}>Ed</Link>
+                            <Link target="_blank" disabled={!course.ed} href={CourseToEd(course)}>Ed</Link>
+                            {` · `}
+                            <Link target="_blank" disabled={!course.panopto} href={CourseToPanopto(course)}>Panopto</Link>
                             {` · `}
                         </>
                     } else {

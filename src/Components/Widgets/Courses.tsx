@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserStore } from "../../Store/UserStore.ts";
 import { List, notification } from "antd";
-import { CourseToEd, CourseToIntro, CourseToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
+import { CourseToEd, CourseToIntro, CourseToPanopto, CourseToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
 import { getWindowDimensions } from "../../lib/helper/screen.ts";
 
@@ -53,12 +53,14 @@ export const Course = () => {
                                 actions={[
                                     <Link target="_blank" href={CourseToIntro(item)}>Info</Link>,
                                     <Link target="_blank" href={CourseToScientia(item)}>Scientia{quote(` (${item.scientia})`)}</Link>,
-                                    <Link disabled={!item.ed} target="_blank" href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>
+                                    <Link target="_blank" disabled={!item.ed} href={CourseToEd(item)}>Ed{quote(` (${item.ed ? item.ed : 'N/A'})`)}</Link>,
+                                    <Link target="_blank" disabled={!item.panopto} href={CourseToPanopto(item)}>Panopto</Link>
                                 ]}
                             >
 
                                 <List.Item.Meta
                                     title={item.name}
+                                    style={{ minWidth: '200px' }}
                                 />
                             </List.Item>
                         )}
