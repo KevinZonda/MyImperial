@@ -3,7 +3,7 @@ import { List } from "antd";
 import { UserStore } from "../../Store/UserStore.ts";
 import { Cache } from "../../Store/Cache.ts";
 import { Event } from "ikalendar";
-import { CourseToEd, ICourse, IdToScientia, ParseCourseErr } from "../../lib/Parser/parser.ts";
+import {CourseToEd, CourseToScientia, ICourse, IdToScientia, ParseCourseErr} from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
 import React from "react";
 import {useInterval} from "usehooks-ts";
@@ -141,20 +141,23 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
             itemLayout="horizontal"
             dataSource={events}
             renderItem={(event) => {
-                const id = EventToScientiaID(event)
+                const ids = EventToScientiaIDs(event)
                 let actions = null
-                if (id) {
-                    const ed = flatCourse?.find((course) => course.scientia === id)
-
-                    actions = <>
-                        <Link target="_blank" href={IdToScientia(id)}>Scientia</Link>
-                        {` · `}
-                        {ed &&
-                            <> <Link target="_blank" href={CourseToEd(ed)}>Ed</Link>
-                                {` · `}
-                            </>
-                        }
-                    </>
+                if (ids && ids.length > 0) {
+                    const course = flatCourse?.find((course) => ids.includes(course.scientia))
+                    if (course) {
+                        actions = <>
+                            <Link target="_blank" href={CourseToScientia(course)}>Scientia</Link>
+                            {` · `}
+                            <Link target="_blank" href={CourseToEd(course)}>Ed</Link>
+                            {` · `}
+                        </>
+                    } else {
+                        actions = <>
+                            <Link target="_blank" href={IdToScientia(ids[0])}>Scientia</Link>
+                            {` · `}
+                        </>
+                    }
                 }
 
 
@@ -173,11 +176,10 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
     )
 }
 
-const regex = /COMP[0-9]+/
-function EventToScientiaID(event: Event): string | undefined {
+const regex = /COMP[0-9]+/g
+function EventToScientiaIDs(event: Event): string[] | undefined {
     if (!event.summary) return undefined
     const match = event.summary.match(regex)
     if (!match || match.length === 0) return undefined
-    // remove COMP prefix
-    return match[0].slice(4)
+    return match.map((m) => m.slice(4))
 }
