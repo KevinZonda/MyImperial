@@ -1,50 +1,19 @@
-import useSWR from "swr";
 import { List } from "antd";
 import { UserStore } from "../../Store/UserStore.ts";
-import { Cache } from "../../Store/Cache.ts";
 import { Event } from "ikalendar";
-import {CourseToEd, CourseToPanopto, CourseToScientia, ICourse, IdToScientia, ParseCourseErr} from "../../lib/Parser/parser.ts";
+import { CourseToEd, CourseToPanopto, CourseToScientia, ICourse, IdToScientia } from "../../lib/Parser/parser.ts";
 import Link from "antd/es/typography/Link";
 import React from "react";
-import {useInterval} from "usehooks-ts";
-import {useScreenSize} from "../../lib/helper/screen.tsx";
-import {ICSDateRangeToString, parseICSDate} from "../../lib/ICS/Date.ts";
-import {parseToCalendar} from "../../lib/ICS/parser.ts";
-
-function filterEventWithCourse(events: Event[] | undefined, courses: ICourse[] | null): Event[] | undefined {
-    if (!UserStore.icalOnlyShowRelatedCourse) return events
-    if (!events) return undefined
-    if (!courses || courses.length === 0) return events
-    const courseCodes = courses.map((course) => course.scientia);
-    return events.filter((event) => {
-        if (!event.summary) return true
-        if (!event.summary.startsWith('COMP')) return true
-        const parts = EventToScientiaIDs(event)
-        if (!parts || parts.length === 0) return true
-        return courseCodes.some((course) => parts.includes(course))
-    })
-}
-
-export async function FetchICS() {
-    const response = await fetch(UserStore.ical);
-    const icsData = await response.text();
-    if (response.status !== 200) {
-        throw new Error(`Failed to fetch ics: ${response.statusText}`)
-    }
-
-    Cache.set('ics', icsData, 1000 * 60 * 60 * 24) // Cache for 24 hours
-    return icsData
-}
+import { useInterval } from "usehooks-ts";
+import { useScreenSize } from "../../lib/helper/screen.tsx";
+import { ICSDateRangeToString, parseICSDate } from "../../lib/ICS/Date.ts";
+import { EventsWithCourse, EventToScientiaIDs, useICSData } from "./iCSData.tsx";
 
 const MarginDiv = ({ children }: { children: React.ReactNode }) => <div style={{ marginTop: 16 }}>{children}</div>
 
-
 export const ICSEvents = () => {
     if (!UserStore.ical) return null
-    const { data, error, isLoading } = useSWR('/ics', async () => {
-        const icsData = Cache.get('ics') || await FetchICS()
-        return parseToCalendar(icsData)
-    })
+    const { data, error, isLoading } = useICSData()
 
     if (isLoading) return <MarginDiv>Events Loading...</MarginDiv>
     if (error) {
@@ -53,15 +22,13 @@ export const ICSEvents = () => {
     }
     if (!data) return <MarginDiv>No events data</MarginDiv>
 
-    const { courses, ok } = ParseCourseErr(UserStore.courses)
-    const flatCourses = !ok ? null : (!courses ? null : courses.flat())
-    const eventsRaw = filterEventWithCourse(data.events, flatCourses)
+    const { events, courses } = EventsWithCourse(data)
 
-    if (!eventsRaw || eventsRaw.length === 0) return <div style={{ marginTop: 16 }}>No events</div>
+    if (!events || events.length === 0) return <div style={{ marginTop: 16 }}>No events</div>
 
     return <>
-        <CurrentEvents eventsRaw={eventsRaw} flatCourse={flatCourses} />
-        <UpcomingEvents eventsRaw={eventsRaw} flatCourse={flatCourses} />
+        <CurrentEvents eventsRaw={events} flatCourse={courses} />
+        <UpcomingEvents eventsRaw={events} flatCourse={courses} />
     </>
 }
 
@@ -175,12 +142,4 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
                 </List.Item>
             }} />
     )
-}
-
-const regex = /COMP[0-9]+/g
-function EventToScientiaIDs(event: Event): string[] | undefined {
-    if (!event.summary) return undefined
-    const match = event.summary.match(regex)
-    if (!match || match.length === 0) return undefined
-    return match.map((m) => m.slice(4))
 }

@@ -4,7 +4,7 @@ import Title from 'antd/es/typography/Title';
 import { UserStore } from './Store/UserStore';
 import { COLOUR_IMPERIAL_BLUE } from './const/Colour';
 import { useState } from 'react';
-import { EyeInvisibleOutlined, EyeOutlined, GithubOutlined, SyncOutlined } from '@ant-design/icons';
+import { CalendarOutlined, EyeInvisibleOutlined, EyeOutlined, GithubOutlined, SyncOutlined } from '@ant-design/icons';
 import { Refresh } from './lib/helper/browser';
 import { WeatherBanner } from './Components/Banners/Weather.tsx';
 import { Course } from './Components/Widgets/Courses.tsx';
@@ -15,6 +15,7 @@ import { Underground } from './Components/Banners/Underground.tsx';
 import { CID } from './Components/Banners/CID.tsx';
 import { CourseSettingBtn } from "./Components/Banners/Course.tsx";
 import { ShareBtn } from "./Components/Banners/Share.tsx";
+import WeekCalendar from './Components/Widgets/WeekCalendar.tsx';
 
 const Welcome = ({ hide }: { hide: boolean }) => {
     const titleStyle: React.CSSProperties = {
@@ -29,6 +30,7 @@ const Welcome = ({ hide }: { hide: boolean }) => {
 
 function App() {
     const [hide, setHide] = useState(false)
+    const [showCalendar, setShowCalendar] = useState(false)
 
     return (
         <>
@@ -47,7 +49,9 @@ function App() {
                     <CourseSettingBtn />
                     <Button type="primary" onClick={() => window.open("https://github.com/KevinZonda/MyImperial", "_blank")} icon={<GithubOutlined />} />
                     <ShareBtn />
+                    <Button type={showCalendar ? 'primary' : undefined} onClick={() => setShowCalendar(!showCalendar)} icon={<CalendarOutlined />} />
                 </Space>
+                { showCalendar && <WeekCalendar /> }
                 <ICSEvents />
                 <Course />
                 <URLList />
