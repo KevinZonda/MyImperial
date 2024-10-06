@@ -3,6 +3,7 @@ import { UserStore } from "../../Store/UserStore";
 import { Refresh } from "../../lib/helper/browser";
 import { FormOutlined } from "@ant-design/icons";
 import { Button, Input, Modal, Space } from "antd";
+import { ImportFromCalendarBtn } from "./CourseImporter";
 
 const { TextArea } = Input;
 
@@ -31,6 +32,7 @@ export const CourseSettingBtn = () => {
 
 
         <Modal title="Modify Your Modules" open={isModalOpen} onOk={onOk} onCancel={onCancel} footer={[
+            <ImportFromCalendarBtn />,
             <Button key="back" onClick={onCancel}>
                 Cancel
             </Button>,

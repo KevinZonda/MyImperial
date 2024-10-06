@@ -16,7 +16,6 @@ import { CID } from './Components/Banners/CID.tsx';
 import { CourseSettingBtn } from "./Components/Banners/Course.tsx";
 import { ShareBtn } from "./Components/Banners/Share.tsx";
 import WeekCalendar from './Components/Widgets/WeekCalendar.tsx';
-
 const Welcome = ({ hide }: { hide: boolean }) => {
     const titleStyle: React.CSSProperties = {
         color: COLOUR_IMPERIAL_BLUE,
