@@ -130,12 +130,12 @@ const Events = ({ events, flatCourse }: { events: Event[], flatCourse: ICourse[]
 
 
                 return <List.Item >
-                    <Link onClick={() => { ModalEvent(event, actions) }}>
+                    <div className="ant-list-item-meta" onClick={() => { ModalEvent(event, actions) }} style={{ cursor: 'pointer' }}>
                         <List.Item.Meta
                             title={event.summary}
                             style={{ minWidth: '200px' }}
                         />
-                    </Link>
+                    </div>
 
                     <p style={{ margin: 0 }}>
                         {actions}
