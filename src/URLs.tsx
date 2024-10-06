@@ -26,10 +26,10 @@ export interface Section {
 export const URLs = (shortCode: string, cid: string) => {
     const doc = new Map<string, string>()
     doc.set("Scientia", DOC_SCIENTIA_URL)
+    doc.set("Ed", ED)
     doc.set("Teaching Server", DOC_TEACHING)
     doc.set("LabTS", DOC_LABTS)
     doc.set("GitLab", GITLAB)
-    doc.set("Ed", ED)
     doc.set("Exam", DOC_EXAM_URL)
     doc.set("SysInfo/Registration", DOC_INFO_REGI)
     doc.set("Personal Page", PERSONAL_PAGE(shortCode))
@@ -37,9 +37,9 @@ export const URLs = (shortCode: string, cid: string) => {
     doc.set("Book Lab Room", DOC_BOOK_LAB_ROOM)
 
     const m = new Map<string, string>()
+    m.set("Outlook", IMPERIAL_MAIL)
     m.set("Panopto", PANOPTO)
     m.set("MyImperial", MY_IMPERIAL)
-    m.set("Outlook", IMPERIAL_MAIL)
     m.set("Blackboard", BB)
     m.set("Calendar", CALENDAR(cid))
     m.set("Book Library Room", BOOK_LIBRARY_ROOM)
