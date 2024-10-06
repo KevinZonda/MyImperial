@@ -14,11 +14,14 @@ function filterEventWithCourse(events: Event[] | undefined, courses: ICourse[] |
     if (!UserStore.icalOnlyShowRelatedCourse) return events
     if (!events) return undefined
     if (!courses || courses.length === 0) return events
-    const courseCodes = courses.map((course) => 'COMP' + course.scientia + ' - ' + course.name)
+    const courseCodes = courses.map((course) => ({
+        id: 'COMP' + course.scientia,
+        title: course.name
+    }));
     return events.filter((event) => {
         if (!event.summary) return true
         if (!event.summary.startsWith('COMP')) return true
-        return courseCodes.includes(event.summary)
+        return courseCodes.some((course) => event.summary!.includes(course.id) && event.summary!.includes(course.title))
     })
 }
 
