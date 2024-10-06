@@ -42,7 +42,7 @@ export const CourseSettingBtn = () => {
             </Button>,
         ]}>
             <Space direction="vertical" style={{ width: '100%' }}>
-                <p style={{ marginBottom: 0 }}>Enter course line by line with <code>courseName | scientiaID | edID</code> format.</p>
+                <p style={{ marginBottom: 0 }}>Enter course line by line with <code>scientiaID | courseName | edID</code> format.</p>
                 <TextArea style={{
                     fontFamily: 'monospace',
                 }} rows={10} value={course} onChange={(e) => setCourse(e.target.value)} />

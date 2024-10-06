@@ -43,7 +43,7 @@ export function ParseCourse(xs: string): ICourse[][] {
             arr = []
             continue
         }
-        let [name, scientia, ed] = line.split('|')
+        let [scientia, name, ed] = line.split('|')
         name = name.trim()
         scientia = scientia.trim()
         ed = ed.trim()
