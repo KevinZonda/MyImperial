@@ -3,13 +3,27 @@ import { EventToScientiaIDs, useICSData } from "../Widgets/iCSData"
 import { useState } from "react";
 import { UserStore } from "../../Store/UserStore";
 import { Refresh } from "../../lib/helper/browser";
+import { ParseCourseErr } from "../../lib/Parser/parser";
 
 const splitOnce = (str: string, separator: string) => {
     const i = str.indexOf(separator);
     return [str.slice(0, i), str.slice(i + 1)];
 }
+
+function initialSelection(): Record<string, boolean> {
+    const { courses, ok } = ParseCourseErr(UserStore.courses)
+    if (!ok || !courses) {
+        return {}
+    }
+    const buf: Record<string, boolean> = {}
+    const flat = courses.flat()
+    for (const course of flat) {
+        buf[course.scientia] = true
+    }
+    return buf
+}
 export const ImportFromCalendarBtn = () => {
-    const [selection, setSelection] = useState<Record<string, boolean>>({})
+    const [selection, setSelection] = useState<Record<string, boolean>>(initialSelection())
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { data, error, isLoading } = useICSData()
     if (isLoading) return <div>Events Loading...</div>
@@ -55,6 +69,8 @@ export const ImportFromCalendarBtn = () => {
         setIsModalOpen(false)
         Refresh()
     }
+
+
 
 
     return <>
